@@ -126,7 +126,6 @@ export const AdminPanel = () => {
           />
           <Button variant="contained" color="primary">Overview</Button>
           <Button variant="outlined" startIcon={<DownloadIcon />} onClick={handleExport} disabled={loading}>Export</Button>
-          <IconButton onClick={handleLogout} title="Logout"><LogoutIcon /></IconButton>
         </div>
       </Box>
 
