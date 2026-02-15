@@ -1,99 +1,132 @@
 import React from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { FiLogOut, FiSettings, FiChevronDown } from 'react-icons/fi';
-import { CATEGORIES } from '../../constants';
+import { FiMenu, FiX, FiLogOut, FiSettings, FiChevronDown } from 'react-icons/fi';
 import './Header.css';
 
-export const Header = ({ isAdmin = false }) => {
+const CATEGORIES = [
+  { id: 'youtube', label: 'YouTube Videos', icon: '📺' },
+  { id: 'instagram', label: 'Instagram Reels', icon: '📱' },
+  { id: 'wedding', label: 'Wedding Videos', icon: '💒' },
+  { id: 'birthday', label: 'Birthday Videos', icon: '🎂' },
+  { id: 'business', label: 'Business Promo', icon: '💼' },
+  { id: 'education', label: 'Education Videos', icon: '🎓' },
+];
+
+export const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isCategoryOpen, setIsCategoryOpen] = React.useState(false);
 
-  // Hide Navbar on admin routes unless explicitly asked to render for admin via `isAdmin`.
-  // Default behavior for the public site remains unchanged.
-  if (!isAdmin && location.pathname.startsWith('/admin')) {
-    return null;
-  }
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+    setIsMenuOpen(false);
+  };
+
+  const handleCategorySelect = (categoryId) => {
+    navigate(`/category/${categoryId}`);
+    setIsCategoryOpen(false);
+    setIsMenuOpen(false);
+  };
+
+  const isActive = (path) => {
+    return location.pathname === path ? 'active' : '';
+  };
+
+  const isCategoryActive = () => {
+    return location.pathname.startsWith('/category') ? 'active' : '';
+  };
 
   return (
     <header className="header">
       <div className="header-container">
         {/* Logo */}
-        <Link to="/" className="header-logo">
-          <span className="logo-icon">🎬</span>
-          <h1>VideoStudio</h1>
-        </Link>
+        <div className="header-logo">
+          <div className="logo-icon">🎬</div>
+          <h1 onClick={() => { navigate('/'); setIsMenuOpen(false); }}>
+            VideoStudio
+          </h1>
+        </div>
 
-        {/* Main Navigation (hidden when rendered for Admin via `isAdmin`) */}
-        <nav className="header-nav">
-          {!isAdmin && (
-            <>
-              <Link
-                to="/"
-                className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
-              >
-                Home
-              </Link>
+        {/* Main Navigation */}
+        <nav className={`header-nav ${isMenuOpen ? 'active' : ''}`}>
+          <Link 
+            to="/" 
+            className={`nav-link ${isActive('/')}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Home
+          </Link>
+          <Link 
+            to="/templates" 
+            className={`nav-link ${isActive('/templates')}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Templates
+          </Link>
+          <Link 
+            to="/editing" 
+            className={`nav-link ${isActive('/editing')}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Editing
+          </Link>
 
-              <Link
-                to="/templates"
-                className={`nav-link ${location.pathname === '/templates' ? 'active' : ''}`}
-              >
-                Templates
-              </Link>
-
-              <Link
-                to="/editing"
-                className={`nav-link ${location.pathname === '/editing' ? 'active' : ''}`}
-              >
-                Editing
-              </Link>
-
-              {/* Categories Dropdown */}
-              <div className={`nav-dropdown ${location.pathname.startsWith('/category') ? 'active' : ''}`}>
+          {/* Categories Dropdown */}
+          <div className={`nav-dropdown ${isCategoryActive()}`}>
+            <button 
+              className="nav-link dropdown-toggle"
+              onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+              onMouseEnter={() => setIsCategoryOpen(true)}
+              onMouseLeave={() => setIsCategoryOpen(false)}
+            >
+              Categories
+              <FiChevronDown className="dropdown-icon" />
+            </button>
+            <div 
+              className={`dropdown-menu ${isCategoryOpen ? 'active' : ''}`}
+              onMouseEnter={() => setIsCategoryOpen(true)}
+              onMouseLeave={() => setIsCategoryOpen(false)}
+            >
+              {CATEGORIES.map((category) => (
                 <button
-                  className="nav-link dropdown-toggle"
+                  key={category.id}
+                  className="dropdown-item"
+                  onClick={() => handleCategorySelect(category.id)}
                 >
-                  Categories
-                  <FiChevronDown className="dropdown-icon" />
+                  <span className="category-icon">{category.icon}</span>
+                  <span className="category-label">{category.label}</span>
                 </button>
-                <div
-                  className="dropdown-menu"
-                >
-                  {CATEGORIES.map((category) => (
-                    <button
-                      key={category.id}
-                      className="dropdown-item"
-                      onClick={() => navigate(`/category/${category.id}`)}
-                    >
-                      <span className="category-icon">{category.icon}</span>
-                      <span className="category-label">{category.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+              ))}
+            </div>
+          </div>
 
-              <Link
-                to="/pricing"
-                className={`nav-link ${location.pathname === '/pricing' ? 'active' : ''}`}
-              >
-                Pricing
-              </Link>
-              <Link
-                to="/about"
-                className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
-              >
-                About
-              </Link>
-              <Link
-                to="/contact"
-                className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}
-              >
-                Contact
-              </Link>
-            </>
-          )}
+          <button 
+            className="nav-link"
+            onClick={() => {
+              navigate('/pricing');
+              setIsMenuOpen(false);
+            }}
+          >
+            Pricing
+          </button>
+          <Link 
+            to="/about" 
+            className={`nav-link ${isActive('/about')}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            About
+          </Link>
+          <Link 
+            to="/contact" 
+            className={`nav-link ${isActive('/contact')}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Contact
+          </Link>
         </nav>
 
         {/* Auth Section */}
@@ -106,7 +139,7 @@ export const Header = ({ isAdmin = false }) => {
             <button className="icon-button" title="Settings">
               <FiSettings />
             </button>
-            <button className="icon-button logout-btn" onClick={() => { logout(); navigate('/login'); }} title="Logout">
+            <button className="icon-button logout-btn" onClick={handleLogout} title="Logout">
               <FiLogOut />
             </button>
           </div>
@@ -115,8 +148,20 @@ export const Header = ({ isAdmin = false }) => {
             <Link to="/login" className="btn-secondary">
               Login
             </Link>
+            <Link to="/signup" className="btn-primary">
+              Sign Up
+            </Link>
           </div>
         )}
+
+        {/* Mobile Menu Toggle */}
+        <button
+          className="menu-toggle"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          title="Toggle Menu"
+        >
+          {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+        </button>
       </div>
     </header>
   );
