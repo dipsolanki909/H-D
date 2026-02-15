@@ -6,8 +6,7 @@ import AdminLayout from '../components/Admin/AdminLayout';
 import '../components/Admin/Admin.css';
 
 // MUI components (used where available) — keeps integration light and progressive
-import { Box, Grid, Card, CardContent, Typography, IconButton, TextField, Button } from '@mui/material';
-import LogoutIcon from '@mui/icons-material/Logout';
+import { Box, Grid, Card, CardContent, Typography, TextField, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import DownloadIcon from '@mui/icons-material/Download';
 
@@ -91,10 +90,6 @@ export const AdminPanel = () => {
     URL.revokeObjectURL(url);
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
 
   const handleAddUser = (e) => {
     e.preventDefault();
