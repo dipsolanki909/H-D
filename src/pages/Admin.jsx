@@ -12,7 +12,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 
 export const AdminPanel = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   const [users, setUsers] = useState([]);
   const [stats, setStats] = useState({});
