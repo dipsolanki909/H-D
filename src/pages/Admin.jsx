@@ -6,7 +6,7 @@ import AdminLayout from '../components/Admin/AdminLayout';
 import '../components/Admin/Admin.css';
 
 // MUI components (used where available) — keeps integration light and progressive
-import { Box, Grid, Card, CardContent, Typography, IconButton, TextField, Select, MenuItem, Button } from '@mui/material';
+import { Box, Grid, Card, CardContent, Typography, IconButton, TextField, Button } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SearchIcon from '@mui/icons-material/Search';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -15,7 +15,6 @@ export const AdminPanel = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
 
-  const [view, setView] = useState('overview');
   const [users, setUsers] = useState([]);
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
@@ -125,8 +124,8 @@ export const AdminPanel = () => {
             onChange={e => { setSearch(e.target.value); setPage(1); }}
             InputProps={{ startAdornment: <SearchIcon fontSize="small" /> }}
           />
-          <Button variant="contained" color="primary" onClick={() => setView('overview')}>Overview</Button>
-          <Button variant="outlined" startIcon={<DownloadIcon />} onClick={handleExport}>Export</Button>
+          <Button variant="contained" color="primary">Overview</Button>
+          <Button variant="outlined" startIcon={<DownloadIcon />} onClick={handleExport} disabled={loading}>Export</Button>
           <IconButton onClick={handleLogout} title="Logout"><LogoutIcon /></IconButton>
         </div>
       </Box>

@@ -1,20 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiPlay, FiDownload, FiFilter, FiLock, FiSearch } from 'react-icons/fi';
+import { FiPlay, FiDownload, FiLock, FiSearch } from 'react-icons/fi';
 import './Templates.css';
 import { getTemplates } from '../api/dataService';
 
-// Now reading templates from dataService (localStorage)
-
-const CATEGORIES = [
-  'All',
-  'YouTube',
-  'Instagram Reels',
-  'Wedding',
-  'Birthday',
-  'Business Promo',
-  'Education',
-];
 
 export const Templates = () => {
   const navigate = useNavigate();

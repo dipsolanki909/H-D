@@ -1,34 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import {
-  FiPlay,
-  FiZap,
-  FiShare2,
-  FiUsers,
-  FiTrendingUp,
-  FiAward,
-  FiArrowRight,
-  FiCheck,
-  FiStar,
-  FiFilm,
-  FiMusic,
-  FiEdit3,
-  FiDownload,
-  FiGlobe,
-} from 'react-icons/fi';
+import { FiPlay, FiZap, FiShare2, FiUsers, FiAward, FiArrowRight, FiCheck, FiFilm, FiMusic, FiEdit3 } from 'react-icons/fi';
 import './Home.css';
 
 export const Home = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const features = [
     {
@@ -196,6 +174,84 @@ export const Home = () => {
               </div>
               <div className="preview-gradient"></div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Free Videos Section */}
+      <section className="free-videos" id="free-videos">
+        <div className="section-container">
+          <div className="section-header">
+            <span className="section-badge">Free Resources</span>
+            <h2>Professional Videos at Zero Cost</h2>
+            <p>Explore our collection of free stock videos, music, and effects</p>
+          </div>
+
+          <div className="free-videos-grid">
+            <div className="video-card featured-video">
+              <div className="video-thumbnail">
+                <div className="play-icon"><FiPlay /></div>
+                <div className="duration">2:45</div>
+              </div>
+              <div className="video-info">
+                <h3>Free Stock Videos</h3>
+                <p>Thousands of high-quality stock videos for any project</p>
+                <div className="video-stats">
+                  <span>4K+ Videos</span>
+                  <span>Royalty Free</span>
+                  <span>HD Quality</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="video-card">
+              <div className="video-thumbnail">
+                <div className="play-icon"><FiMusic /></div>
+              </div>
+              <div className="video-info">
+                <h3>Free Music Library</h3>
+                <p>Royalty-free music tracks for your videos</p>
+                <div className="video-stats">
+                  <span>10K+ Tracks</span>
+                  <span>All Genres</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="video-card">
+              <div className="video-thumbnail">
+                <div className="play-icon"><FiZap /></div>
+              </div>
+              <div className="video-info">
+                <h3>Sound Effects</h3>
+                <p>Extensive collection of professional sound effects</p>
+                <div className="video-stats">
+                  <span>5K+ Effects</span>
+                  <span>Instant Download</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="video-card">
+              <div className="video-thumbnail">
+                <div className="play-icon"><FiFilm /></div>
+              </div>
+              <div className="video-info">
+                <h3>Templates</h3>
+                <p>Ready-to-use video templates for quick creation</p>
+                <div className="video-stats">
+                  <span>8K+ Templates</span>
+                  <span>Customizable</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="free-videos-cta">
+            <button className="btn-primary-hero" onClick={() => navigate('/templates')}>
+              Browse Free Resources <FiArrowRight />
+            </button>
+            <p className="cta-subtitle">Start creating instantly with our free library</p>
           </div>
         </div>
       </section>
