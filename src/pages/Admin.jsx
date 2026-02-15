@@ -19,7 +19,7 @@ export const AdminPanel = () => {
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [pageSize, setPageSize] = useState(8);
+  const pageSize = 8;
   const [page, setPage] = useState(1);
   const [showAddUser, setShowAddUser] = useState(false);
 

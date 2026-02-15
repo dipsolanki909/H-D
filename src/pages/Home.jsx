@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FiPlay, FiZap, FiShare2, FiUsers, FiAward, FiArrowRight, FiCheck, FiFilm, FiMusic, FiEdit3 } from 'react-icons/fi';
