@@ -80,7 +80,7 @@ export function About() {
   ];
 
   return (
-    <div className="about-page">
+    <main className="about-page">
       {/* Hero Section */}
       <section className="about-hero">
         <div className="hero-blob hero-blob-1"></div>
@@ -219,6 +219,6 @@ export function About() {
         <p>Join millions of creators worldwide on their video journey</p>
         <button className="cta-button">Start Creating Now</button>
       </section>
-    </div>
+    </main>
   );
 }

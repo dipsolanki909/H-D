@@ -9,7 +9,6 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f7fa;
   color: #333;
 }
 
@@ -21,8 +20,10 @@ html, body, #root {
 }
 
 #root {
-  display: flex;
-  flex-direction: column;
+   
+  min-height: 100vh;
+  background: transparent;
+
 }
 
 .loading-screen {

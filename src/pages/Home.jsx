@@ -1,8 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FiPlay, FiZap, FiShare2, FiUsers, FiAward, FiArrowRight, FiCheck, FiFilm, FiMusic, FiEdit3 } from 'react-icons/fi';
+import { FiPlay, FiZap, FiShare2, FiUsers, FiAward, FiArrowRight, FiCheck, FiFilm, FiMusic, FiEdit3, FiYoutube, FiGift, FiBriefcase, FiBookOpen, FiLayout, FiEdit, FiSend, FiSmile, FiDollarSign, FiLifeBuoy } from 'react-icons/fi';
 import './Home.css';
+import whyChooseUsImage from '../assets/guentherdillingen-photographer-3804979.jpg';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -49,65 +50,90 @@ export const Home = () => {
 
   const categories = [
     {
-      icon: '📺',
+      icon: <FiYoutube />,
       title: 'YouTube',
       description: 'Create viral video content optimized for YouTube',
       videos: '5K+ templates',
+      color: '#ff0000',
     },
     {
-      icon: '📱',
+      icon: <FiShare2 />,
       title: 'Social Media',
       description: 'Perfect sizes for Instagram, TikTok & Reels',
       videos: '8K+ templates',
+      color: '#1da1f2',
     },
     {
-      icon: '💒',
+      icon: <FiGift />,
       title: 'Events',
       description: 'Wedding, birthdays, anniversaries & celebrations',
       videos: '3K+ templates',
+      color: '#ff7f50',
     },
     {
-      icon: '💼',
+      icon: <FiBriefcase />,
       title: 'Business',
       description: 'Professional promos, ads & corporate videos',
       videos: '4K+ templates',
+      color: '#333333',
     },
     {
-      icon: '🎓',
+      icon: <FiBookOpen />,
       title: 'Education',
       description: 'E-learning, tutorials & educational content',
       videos: '2K+ templates',
+      color: '#2ed573',
     },
     {
-      icon: '🎬',
+      icon: <FiFilm />,
       title: 'Creative',
       description: 'Art films, music videos & experimental content',
       videos: '6K+ templates',
+      color: '#ff4757',
+    },
+  ];
+
+  const howItWorksSteps = [
+    {
+      icon: <FiLayout />,
+      title: 'Choose a Template',
+      description: 'Browse thousands of professionally designed templates or start from scratch.',
+    },
+    {
+      icon: <FiEdit />,
+      title: 'Customize & Edit',
+      description: 'Add your content with drag-and-drop simplicity. No coding required.',
+    },
+    {
+      icon: <FiSend />,
+      title: 'Export & Share',
+      description: 'Download or share directly to your favorite platforms instantly.',
     },
   ];
 
   const whyChooseUs = [
     {
-      number: '01',
+      icon: <FiSmile />,
       title: 'Easy to Learn',
       description: 'No technical skills required. Start creating within minutes.',
     },
     {
-      number: '02',
+      icon: <FiDollarSign />,
       title: 'Affordable',
       description: 'Premium features at a fraction of traditional software costs.',
     },
     {
-      number: '03',
+      icon: <FiAward />,
       title: 'Professional Results',
       description: 'Advanced AI and algorithms ensure broadcast-quality output.',
     },
     {
-      number: '04',
+      icon: <FiLifeBuoy />,
       title: '24/7 Support',
       description: 'Our dedicated team is always here to help you succeed.',
     },
   ];
+
 
   const stats = [
     { value: '1M+', label: 'Videos Created' },
@@ -133,10 +159,7 @@ export const Home = () => {
     <div className="home">
       {/* Hero Section */}
       <section className="hero">
-        <div className="hero-background">
-          <div className="gradient-blob blob-1"></div>
-          <div className="gradient-blob blob-2"></div>
-        </div>
+
         
         <div className="hero-content">
           <div className="hero-text">
@@ -169,10 +192,15 @@ export const Home = () => {
 
           <div className="hero-visual">
             <div className="video-preview">
-              <div className="play-button">
-                <FiPlay />
-              </div>
-              <div className="preview-gradient"></div>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="hero-main-video"
+                src="/images/animasoin/WhatsApp%20Video%202026-02-18%20at%204.09.49%20PM.mp4"
+              >
+              </video>
             </div>
           </div>
         </div>
@@ -190,8 +218,9 @@ export const Home = () => {
           <div className="free-videos-grid">
             <div className="video-card featured-video">
               <div className="video-thumbnail">
+                <video autoPlay loop muted playsInline src="/images/vidioes/WhatsApp%20Video%202026-02-20%20at%2012.48.28%20PM.mp4"></video>
                 <div className="play-icon"><FiPlay /></div>
-                <div className="duration">2:45</div>
+                <div className="duration">0:15</div>
               </div>
               <div className="video-info">
                 <h3>Free Stock Videos</h3>
@@ -206,7 +235,8 @@ export const Home = () => {
 
             <div className="video-card">
               <div className="video-thumbnail">
-                <div className="play-icon"><FiMusic /></div>
+                <video autoPlay loop muted playsInline src="/images/vidioes/WhatsApp%20Video%202026-02-20%20at%2012.48.32%20PM.mp4"></video>
+                <div className="play-icon"><FiPlay /></div>
               </div>
               <div className="video-info">
                 <h3>Free Music Library</h3>
@@ -220,7 +250,8 @@ export const Home = () => {
 
             <div className="video-card">
               <div className="video-thumbnail">
-                <div className="play-icon"><FiZap /></div>
+                <video autoPlay loop muted playsInline src="/images/vidioes/WhatsApp%20Video%202026-02-20%20at%2012.48.34%20PM.mp4"></video>
+                <div className="play-icon"><FiPlay /></div>
               </div>
               <div className="video-info">
                 <h3>Sound Effects</h3>
@@ -234,7 +265,8 @@ export const Home = () => {
 
             <div className="video-card">
               <div className="video-thumbnail">
-                <div className="play-icon"><FiFilm /></div>
+                <video autoPlay loop muted playsInline src="/images/vidioes/WhatsApp%20Video%202026-02-20%20at%2012.48.39%20PM.mp4"></video>
+                <div className="play-icon"><FiPlay /></div>
               </div>
               <div className="video-info">
                 <h3>Templates</h3>
@@ -291,11 +323,16 @@ export const Home = () => {
 
           <div className="categories-grid">
             {categories.map((category, index) => (
-              <div key={index} className="category-card">
-                <div className="category-icon">{category.icon}</div>
+              <div key={index} className="category-card" style={{'--category-color': category.color}}>
+                <div className="category-icon-wrapper">
+                  {category.icon}
+                </div>
                 <h3>{category.title}</h3>
                 <p>{category.description}</p>
-                <div className="category-meta">{category.videos}</div>
+                <div className="category-meta">
+                  <span>{category.videos}</span>
+                  <FiArrowRight />
+                </div>
               </div>
             ))}
           </div>
@@ -311,23 +348,14 @@ export const Home = () => {
           </div>
 
           <div className="steps-grid">
-            <div className="step-card">
-              <div className="step-number">1</div>
-              <h3>Choose a Template</h3>
-              <p>Browse thousands of professionally designed templates or start from scratch.</p>
-            </div>
-            <div className="step-connector">→</div>
-            <div className="step-card">
-              <div className="step-number">2</div>
-              <h3>Customize & Edit</h3>
-              <p>Add your content with drag-and-drop simplicity. No coding required.</p>
-            </div>
-            <div className="step-connector">→</div>
-            <div className="step-card">
-              <div className="step-number">3</div>
-              <h3>Export & Share</h3>
-              <p>Download or share directly to your favorite platforms instantly.</p>
-            </div>
+            {howItWorksSteps.map((step, index) => (
+              <div key={index} className="step-card">
+                <div className="step-icon">{step.icon}</div>
+                <div className="step-number">{`0${index + 1}`}</div>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -335,19 +363,26 @@ export const Home = () => {
       {/* Why Choose Us */}
       <section className="why-choose-us" id="why">
         <div className="section-container">
-          <div className="section-header">
-            <span className="section-badge">Why Choose Us</span>
-            <h2>The Smartest Choice for Video Creation</h2>
+          <div className="why-visual">
+            <img src={whyChooseUsImage} alt="Professional videographer editing on a laptop" />
           </div>
+          <div className="why-content">
+            <div className="section-header">
+              <span className="section-badge">Why Choose Us</span>
+              <h2>The Smartest Choice for Video Creation</h2>
+            </div>
 
-          <div className="why-grid">
-            {whyChooseUs.map((item, index) => (
-              <div key={index} className="why-card">
-                <div className="why-number">{item.number}</div>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </div>
-            ))}
+            <div className="why-grid">
+              {whyChooseUs.map((item, index) => (
+                <div key={index} className="why-card">
+                  <div className="why-icon">{item.icon}</div>
+                  <div className="why-card-text">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

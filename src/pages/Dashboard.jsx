@@ -5,6 +5,7 @@ import { useAppStore } from '../utils/appStore';
 import { FiPlus, FiPlay, FiTrash2, FiSettings, FiLogOut } from 'react-icons/fi';
 import { projectAPI, videoAPI } from '../api/client';
 import '../components/Dashboard/Dashboard.css';
+import UploadNewVideo from '../components/Dashboard/UploadNewVideo';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ export const Dashboard = () => {
       <header className="dashboard-header">
         <div className="header-left">
           <h1>🎬 VideoStudio</h1>
-          <p>Welcome back, {user?.fullName || 'Guest'}!</p>
+          
         </div>
         <div className="header-right">
           {user?.role === 'admin' && (
@@ -87,10 +88,6 @@ export const Dashboard = () => {
               Admin
             </button>
           )}
-          <button className="btn-icon" onClick={handleLogout}>
-            <FiLogOut size={20} />
-            Logout
-          </button>
         </div>
       </header>
 
@@ -248,6 +245,7 @@ export const Dashboard = () => {
           )}
         </main>
       </div>
+      <UploadNewVideo />
     </div>
   );
 };

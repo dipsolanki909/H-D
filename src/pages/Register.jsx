@@ -75,154 +75,102 @@ export const Signup = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-wrapper">
-        {/* Left Side - Branding */}
-        <div className="auth-branding">
-          <div className="branding-content">
-            <div className="branding-icon">🎬</div>
-            <h2>Start Creating</h2>
-            <p>Join thousands creating videos with VideoStudio</p>
-            
-            <div className="features-list">
-              <div className="feature-item">✨ Free Templates</div>
-              <div className="feature-item">🎨 Easy Editor</div>
-              <div className="feature-item">⚡ Quick Export</div>
-              <div className="feature-item">☁️ Cloud Storage</div>
-            </div>
+    <div className="login-page">
+      <div className="login-container">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2>Create Account</h2>
+          {error && <div className="error-message">{error}</div>}
+
+          <div className="form-group">
+            <label htmlFor="name">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="John Doe"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              disabled={loading}
+              required
+            />
           </div>
-        </div>
 
-        {/* Right Side - Form */}
-        <div className="auth-form-container">
-          <div className="form-wrapper">
-            <h1>Create Account</h1>
-            <p className="form-subtitle">Join VideoStudio today</p>
+          <div className="form-group">
+            <label htmlFor="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="your@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
+              required
+            />
+          </div>
 
-            {error && (
-              <div className="error-message">
-                <div className="error-icon">⚠️</div>
-                {error}
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="auth-form">
-              {/* Name Field */}
-              <div className="form-group">
-                <label htmlFor="name">Full Name</label>
-                <div className="input-wrapper">
-                  <FiUser className="input-icon" />
-                  <input
-                    type="text"
-                    id="name"
-                    placeholder="John Doe"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    disabled={loading}
-                    className="form-input"
-                  />
-                </div>
-              </div>
-
-              {/* Email Field */}
-              <div className="form-group">
-                <label htmlFor="email">Email Address</label>
-                <div className="input-wrapper">
-                  <FiMail className="input-icon" />
-                  <input
-                    type="email"
-                    id="email"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={loading}
-                    className="form-input"
-                  />
-                </div>
-              </div>
-
-              {/* Password Field */}
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <div className="input-wrapper">
-                  <FiLock className="input-icon" />
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    id="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={loading}
-                    className="form-input"
-                  />
-                  <button
-                    type="button"
-                    className="password-toggle"
-                    onClick={() => setShowPassword(!showPassword)}
-                    tabIndex="-1"
-                  >
-                    {showPassword ? <FiEyeOff /> : <FiEye />}
-                  </button>
-                </div>
-              </div>
-
-              {/* Confirm Password Field */}
-              <div className="form-group">
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <div className="input-wrapper">
-                  <FiLock className="input-icon" />
-                  <input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    id="confirmPassword"
-                    placeholder="••••••••"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    disabled={loading}
-                    className="form-input"
-                  />
-                  <button
-                    type="button"
-                    className="password-toggle"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    tabIndex="-1"
-                  >
-                    {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
-                  </button>
-                </div>
-              </div>
-
-              {/* Terms Agreement */}
-              <label className="terms-checkbox">
-                <input
-                  type="checkbox"
-                  checked={agreed}
-                  onChange={(e) => setAgreed(e.target.checked)}
-                  disabled={loading}
-                />
-                <span>I agree to the Terms of Service and Privacy Policy</span>
-              </label>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="btn-submit"
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <div className="input-wrapper">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 disabled={loading}
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
               >
-                {loading ? 'Creating Account...' : 'Create Account'}
+                {showPassword ? <FiEyeOff /> : <FiEye />}
               </button>
-            </form>
-
-            {/* Divider */}
-            <div className="divider">
-              <span>Already have an account?</span>
             </div>
-
-            {/* Login Link */}
-            <Link to="/login" className="btn-signup">
-              Sign In
-            </Link>
           </div>
-        </div>
+
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <div className="input-wrapper">
+              <input
+                type={showConfirmPassword ? 'text' : 'password'}
+                id="confirmPassword"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                disabled={loading}
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="terms-checkbox">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                disabled={loading}
+              />
+              <span>I agree to the <Link to="/terms">Terms of Service</Link></span>
+            </label>
+          </div>
+
+          <button type="submit" disabled={loading}>
+            {loading ? 'Creating Account...' : 'Create Account'}
+          </button>
+
+          <div className="text-center">
+            Already have an account? <Link to="/login">Sign In</Link>
+          </div>
+        </form>
       </div>
     </div>
   );

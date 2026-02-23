@@ -4,6 +4,16 @@ import { FiPlay, FiDownload, FiLock, FiSearch } from 'react-icons/fi';
 import './Templates.css';
 import { getTemplates } from '../api/dataService';
 
+const videos = [
+  '/images/templets/WhatsApp Video 2026-02-20 at 12.46.10 PM.mp4',
+  '/images/templets/WhatsApp Video 2026-02-20 at 12.46.19 PM.mp4',
+  '/images/templets/WhatsApp Video 2026-02-20 at 12.46.22 PM.mp4',
+  '/images/templets/WhatsApp Video 2026-02-20 at 12.46.34 PM.mp4',
+  '/images/templets/WhatsApp Video 2026-02-20 at 12.46.37 PM.mp4',
+  '/images/templets/WhatsApp Video 2026-02-20 at 12.47.03 PM.mp4',
+  '/images/templets/WhatsApp Video 2026-02-20 at 12.47.11 PM.mp4',
+  '/images/templets/WhatsApp Video 2026-02-20 at 12.48.25 PM.mp4',
+];
 
 export const Templates = () => {
   const navigate = useNavigate();
@@ -12,7 +22,13 @@ export const Templates = () => {
   const [category, setCategory] = useState('All');
   const [preview, setPreview] = useState(null);
 
-  useEffect(() => setTemplatesData(getTemplates()), []);
+  useEffect(() => {
+    const templates = getTemplates().map((template, index) => ({
+      ...template,
+      video: videos[index % videos.length],
+    }));
+    setTemplatesData(templates);
+  }, []);
 
   const categories = React.useMemo(() => {
     const s = new Set(['All']);
@@ -46,24 +62,6 @@ export const Templates = () => {
             <h1>Create stunning videos from templates</h1>
             <p className="subtitle">Professionally-designed templates for every use — social, promo, events and more.</p>
 
-            <div className="search-row">
-              <div className="search-input-wrap">
-                <FiSearch className="search-icon" />
-                <input
-                  aria-label="Search templates"
-                  className="search-input"
-                  placeholder="Search templates, categories or keywords"
-                  value={query}
-                  onChange={e => setQuery(e.target.value)}
-                />
-              </div>
-
-              <div className="cta-actions">
-                <button className="btn-outline" onClick={() => { setQuery(''); setCategory('All'); }}>Reset</button>
-                <button className="btn-primary" onClick={() => navigate('/upload')}>Start from scratch</button>
-              </div>
-            </div>
-
             <nav className="category-tabs" role="tablist" aria-label="Template categories">
               {categories.map(cat => (
                 <button
@@ -79,20 +77,28 @@ export const Templates = () => {
             </nav>
           </div>
 
-          <div className="tp-hero-right">
-            <div className="hero-card">
-              <div className="hero-img" />
-              <div className="hero-stats">
-                <div><strong>24</strong><span>Featured</span></div>
-                <div><strong>100+</strong><span>Templates</span></div>
-                <div><strong>Free + Premium</strong><span>Options</span></div>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </header>
 
       <main className="tp-main">
+        <div className="search-row">
+          <div className="search-input-wrap">
+            <FiSearch className="search-icon" />
+            <input
+              aria-label="Search templates"
+              className="search-input"
+              placeholder="Search templates, categories or keywords"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+            />
+          </div>
+
+          <div className="cta-actions">
+            <button className="btn-outline" onClick={() => { setQuery(''); setCategory('All'); }}>Reset</button>
+            <button className="btn-primary" onClick={() => navigate('/upload')}>Start from scratch</button>
+          </div>
+        </div>
         <section className="grid-wrap">
           {filtered.length === 0 ? (
             <div className="no-results-card">
@@ -103,10 +109,10 @@ export const Templates = () => {
           ) : (
             <div className="templates-grid">
               {filtered.map(t => (
-                <article key={t.id} className="template-card" aria-label={t.name}>
+                <article key={t.id} className="template-card" aria-label={t.name} onClick={() => onUse(t)}>
                   <div className="media-wrap">
-                    {t.image ? (
-                      <img src={t.image} alt={t.name} className="thumb" />
+                    {t.video ? (
+                      <video src={t.video} alt={t.name} className="thumb" muted autoPlay loop />
                     ) : (
                       <div className="thumb-fallback">{t.name.charAt(0)}</div>
                     )}
@@ -115,7 +121,7 @@ export const Templates = () => {
                       <div className="lock-overlay" title="Premium template"><FiLock /></div>
                     )}
 
-                    <button className="preview-circle" onClick={() => setPreview(t)} aria-label={`Preview ${t.name}`}>
+                    <button className="preview-circle" onClick={(e) => { e.stopPropagation(); setPreview(t);}} aria-label={`Preview ${t.name}`}>
                       <FiPlay />
                     </button>
                   </div>
@@ -130,7 +136,7 @@ export const Templates = () => {
                   </div>
 
                   <div className="card-actions">
-                    <button className="btn-ghost" onClick={() => setPreview(t)}><FiPlay /> Preview</button>
+                    <button className="btn-ghost" onClick={(e) => { e.stopPropagation(); setPreview(t);}}><FiPlay /> Preview</button>
                     <button className={`btn-cta ${t.type === 'premium' ? 'locked' : ''}`} onClick={() => onUse(t)}>
                       <FiDownload /> {t.type === 'premium' ? 'Upgrade' : 'Use template'}
                     </button>
@@ -143,14 +149,14 @@ export const Templates = () => {
       </main>
 
       {preview && (
-        <div className="preview-modal" role="dialog" aria-modal="true">
-          <div className="preview-card">
+        <div className="preview-modal" role="dialog" aria-modal="true" onClick={() => setPreview(null)}>
+          <div className="preview-card" onClick={e => e.stopPropagation()}>
             <header>
               <h3>{preview.name}</h3>
               <button className="close" onClick={() => setPreview(null)}>✕</button>
             </header>
             <div className="preview-content">
-              {preview.image ? <img src={preview.image} alt={preview.name} /> : <div className="preview-fallback">No preview</div>}
+              {preview.video ? <video src={preview.video} alt={preview.name} controls autoPlay /> : <div className="preview-fallback">No preview</div>}
               <div className="preview-meta">
                 <p><strong>Category:</strong> {preview.category}</p>
                 <p><strong>Duration:</strong> {preview.duration}</p>

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../utils/appStore';
 import { isValidVideoFile, formatFileSize } from '../utils/validators';
-import { FiUploadCloud, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
-import '../components/VideoUpload/Upload.css';
+import { FiUploadCloud, FiCheckCircle, FiAlertCircle, FiVideo, FiGrid } from 'react-icons/fi';
+import './Upload.css';
 
 const CATEGORIES = [
   { id: 'youtube', label: 'YouTube', icon: '📺' },
@@ -89,7 +89,7 @@ export const VideoUpload = () => {
       <div className="upload-content">
         {/* Step 1: Select Video */}
         <div className="upload-section">
-          <h2>Step 1: Select Your Video</h2>
+          <h2><FiVideo /> Step 1: Select Your Video</h2>
 
           <div
             className="upload-zone"
@@ -148,7 +148,7 @@ export const VideoUpload = () => {
         {/* Step 2: Select Category */}
         {selectedFile && (
           <div className="upload-section">
-            <h2>Step 2: Select Category</h2>
+            <h2><FiGrid /> Step 2: Select Category</h2>
             <div className="categories-grid">
               {CATEGORIES.map(category => (
                 <button

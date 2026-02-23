@@ -16,6 +16,9 @@ import { Export } from './pages/Export';
 import { AdminPanel } from './pages/Admin';
 import { AdminTemplates } from './pages/admin/AdminTemplates';
 import { AdminPricing } from './pages/admin/AdminPricing';
+import { AdminProjects } from './pages/admin/AdminProjects';
+import CustomerDashboard from './pages/CustomerDashboard';
+import { CustomerProjects } from './pages/customer/CustomerProjects';
 import { Category } from './pages/Category';
 import { About } from './pages/About';
 import { Contact } from './pages/Contact';
@@ -132,6 +135,24 @@ function AppContent() {
         }
       />
 
+      {/* Customer Routes */}
+      <Route
+        path="/customer/dashboard"
+        element={
+          <ProtectedRoute>
+            <CustomerDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/customer/projects"
+        element={
+          <ProtectedRoute>
+            <CustomerProjects />
+          </ProtectedRoute>
+        }
+      />
+
       {/* Admin Routes */}
       <Route
         path="/admin"
@@ -162,6 +183,14 @@ function AppContent() {
         element={
           <AdminRoute>
             <AdminPricing />
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/projects"
+        element={
+          <AdminRoute>
+            <AdminProjects />
           </AdminRoute>
         }
       />

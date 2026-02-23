@@ -136,14 +136,6 @@ export const AdminPanel = () => {
         <Grid item xs={12} md={4}>
           <Card className="stat-card">
             <CardContent>
-              <Typography variant="subtitle2">Storage Used</Typography>
-              <Typography className="stat-value">{stats?.storageUsed ?? '0 GB'}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Card className="stat-card">
-            <CardContent>
               <Typography variant="subtitle2">Active Projects</Typography>
               <Typography className="stat-value">{stats?.activeProjects ?? 0}</Typography>
             </CardContent>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
@@ -58,31 +58,48 @@ export const Login = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-wrapper">
-        <div className="auth-form-container">
-          <div className="login-page">
-            <div className="login-container">
-              <form className="login-form">
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input type={showPassword ? 'text' : 'password'} id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? 'Hide' : 'Show'}
-                  </button>
-                </div>
-                <button type="submit" onClick={handleSubmit} disabled={loading}>
-                  {loading ? 'Logging in…' : 'Login'}
-                </button>
-                {error && <div className="error-message">{error}</div>}
-              </form>
-            </div>
+    <div className="login-page">
+      <div className="login-container">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2>Login</h2>
+          {error && <div className="error-message">{error}</div>}
+          <div className="form-group">
+            <label htmlFor="username">Username or Email</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
-        </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Logging in…' : 'Login'}
+          </button>
+          <div className="text-center">
+            Don't have an account? <Link to="/signup">Register here</Link>
+          </div>
+          <div className="text-center">
+            <Link to="/forgot-password">Forgot password?</Link>
+          </div>
+        </form>
       </div>
     </div>
   );

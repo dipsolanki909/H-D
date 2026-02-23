@@ -49,6 +49,20 @@ const CATEGORY_DATA = {
   }
 };
 
+const videos = [
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.48.28 PM.mp4',
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.48.32 PM.mp4',
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.48.34 PM.mp4',
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.48.39 PM.mp4',
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.48.42 PM.mp4',
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.48.44 PM.mp4',
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.49.14 PM.mp4',
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.49.26 PM.mp4',
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.49.30 PM.mp4',
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.49.42 PM.mp4',
+  '/images/vidioes/WhatsApp Video 2026-02-20 at 12.49.56 PM.mp4',
+];
+
 // Featured Templates Data
 const TEMPLATES_DATA = {
   youtube: [
@@ -57,7 +71,7 @@ const TEMPLATES_DATA = {
       name: 'Modern Intro Pack',
       duration: '10s',
       type: 'free',
-      image: '🎬',
+      video: videos[0],
       description: 'Clean and modern intro template'
     },
     {
@@ -65,7 +79,7 @@ const TEMPLATES_DATA = {
       name: 'Gaming Intro',
       duration: '15s',
       type: 'free',
-      image: '🎮',
+      video: videos[1],
       description: 'Perfect for gaming content creators'
     },
     {
@@ -73,7 +87,7 @@ const TEMPLATES_DATA = {
       name: 'Professional Intro',
       duration: '12s',
       type: 'premium',
-      image: '🎯',
+      video: videos[2],
       description: 'Premium professional template'
     },
     {
@@ -81,7 +95,7 @@ const TEMPLATES_DATA = {
       name: 'Vlog Intro',
       duration: '8s',
       type: 'free',
-      image: '📹',
+      video: videos[3],
       description: 'Quick vlog intro template'
     },
     {
@@ -89,7 +103,7 @@ const TEMPLATES_DATA = {
       name: 'Cinematic Intro',
       duration: '20s',
       type: 'premium',
-      image: '🎞️',
+      video: videos[4],
       description: 'Cinematic style intro'
     },
     {
@@ -97,7 +111,7 @@ const TEMPLATES_DATA = {
       name: 'Energetic Opener',
       duration: '15s',
       type: 'premium',
-      image: '⚡',
+      video: videos[5],
       description: 'High energy video opener'
     }
   ],
@@ -107,7 +121,7 @@ const TEMPLATES_DATA = {
       name: 'Trendy Reel',
       duration: '15s',
       type: 'free',
-      image: '🎀',
+      video: videos[6],
       description: 'Trendy social media reel'
     },
     {
@@ -115,7 +129,7 @@ const TEMPLATES_DATA = {
       name: 'Fashion Reel',
       duration: '10s',
       type: 'free',
-      image: '👗',
+      video: videos[7],
       description: 'Fashion focused template'
     },
     {
@@ -123,15 +137,14 @@ const TEMPLATES_DATA = {
       name: 'Beauty Tutorial',
       duration: '30s',
       type: 'premium',
-      image: '💄',
+      video: videos[8],
       description: 'Beauty content template'
     },
-    {
-      id: 'ig-4',
+    {_id: 'ig-4',
       name: 'Fitness Reel',
       duration: '15s',
       type: 'free',
-      image: '💪',
+      video: videos[9],
       description: 'Fitness workout template'
     },
     {
@@ -139,7 +152,7 @@ const TEMPLATES_DATA = {
       name: 'Food Video',
       duration: '20s',
       type: 'premium',
-      image: '🍕',
+      video: videos[10],
       description: 'Food content template'
     },
     {
@@ -147,7 +160,7 @@ const TEMPLATES_DATA = {
       name: 'Travel Reel',
       duration: '15s',
       type: 'free',
-      image: '✈️',
+      video: videos[0],
       description: 'Travel vlogging template'
     }
   ],
@@ -157,7 +170,7 @@ const TEMPLATES_DATA = {
       name: 'Classic Love Story',
       duration: '60s',
       type: 'premium',
-      image: '💕',
+      video: videos[1],
       description: 'Romantic wedding slideshow'
     },
     {
@@ -165,7 +178,7 @@ const TEMPLATES_DATA = {
       name: 'Ceremony Highlight',
       duration: '45s',
       type: 'free',
-      image: '💒',
+      video: videos[2],
       description: 'Ceremony moments highlight'
     },
     {
@@ -173,7 +186,7 @@ const TEMPLATES_DATA = {
       name: 'Reception Reel',
       duration: '90s',
       type: 'premium',
-      image: '🎉',
+      video: videos[3],
       description: 'Reception party video'
     },
     {
@@ -181,7 +194,7 @@ const TEMPLATES_DATA = {
       name: 'Photo Montage',
       duration: '120s',
       type: 'premium',
-      image: '📸',
+      video: videos[4],
       description: 'Complete wedding montage'
     },
     {
@@ -189,7 +202,7 @@ const TEMPLATES_DATA = {
       name: 'Guest Messages',
       duration: '60s',
       type: 'free',
-      image: '💌',
+      video: videos[5],
       description: 'Guest greeting compilation'
     },
     {
@@ -197,7 +210,7 @@ const TEMPLATES_DATA = {
       name: 'Romantic Cinematic',
       duration: '150s',
       type: 'premium',
-      image: '🎬',
+      video: videos[6],
       description: 'Cinematic wedding video'
     }
   ],
@@ -207,7 +220,7 @@ const TEMPLATES_DATA = {
       name: 'Fun Birthday Intro',
       duration: '20s',
       type: 'free',
-      image: '🎉',
+      video: videos[7],
       description: 'Fun and colorful intro'
     },
     {
@@ -215,7 +228,7 @@ const TEMPLATES_DATA = {
       name: 'Birthday Countdown',
       duration: '30s',
       type: 'free',
-      image: '⏳',
+      video: videos[8],
       description: 'Countdown to party'
     },
     {
@@ -223,7 +236,7 @@ const TEMPLATES_DATA = {
       name: 'Kids Party Video',
       duration: '45s',
       type: 'premium',
-      image: '🎈',
+      video: videos[9],
       description: 'Kids birthday party template'
     },
     {
@@ -231,7 +244,7 @@ const TEMPLATES_DATA = {
       name: 'Milestone Birthday',
       duration: '60s',
       type: 'premium',
-      image: '🌟',
+      video: videos[10],
       description: 'Milestone celebration video'
     },
     {
@@ -239,7 +252,7 @@ const TEMPLATES_DATA = {
       name: 'Photo Slideshow',
       duration: '90s',
       type: 'free',
-      image: '📷',
+      video: videos[0],
       description: 'Birthday photo montage'
     },
     {
@@ -247,7 +260,7 @@ const TEMPLATES_DATA = {
       name: 'Birthday Surprise',
       duration: '45s',
       type: 'premium',
-      image: '🎁',
+      video: videos[1],
       description: 'Surprise birthday video'
     }
   ],
@@ -257,7 +270,7 @@ const TEMPLATES_DATA = {
       name: 'Corporate Intro',
       duration: '15s',
       type: 'premium',
-      image: '🏢',
+      video: videos[2],
       description: 'Professional corporate video'
     },
     {
@@ -265,7 +278,7 @@ const TEMPLATES_DATA = {
       name: 'Product Demo',
       duration: '30s',
       type: 'free',
-      image: '📦',
+      video: videos[3],
       description: 'Product showcase template'
     },
     {
@@ -273,7 +286,7 @@ const TEMPLATES_DATA = {
       name: 'Service Promo',
       duration: '45s',
       type: 'premium',
-      image: '🎯',
+      video: videos[4],
       description: 'Service promotional video'
     },
     {
@@ -281,7 +294,7 @@ const TEMPLATES_DATA = {
       name: 'Company Culture',
       duration: '60s',
       type: 'premium',
-      image: '👥',
+      video: videos[5],
       description: 'Company culture video'
     },
     {
@@ -289,7 +302,7 @@ const TEMPLATES_DATA = {
       name: 'Testimonial Video',
       duration: '20s',
       type: 'free',
-      image: '⭐',
+      video: videos[6],
       description: 'Customer testimonial template'
     },
     {
@@ -297,7 +310,7 @@ const TEMPLATES_DATA = {
       name: 'Sales Pitch',
       duration: '45s',
       type: 'premium',
-      image: '💼',
+      video: videos[7],
       description: 'Professional sales pitch'
     }
   ],
@@ -307,7 +320,7 @@ const TEMPLATES_DATA = {
       name: 'Course Intro',
       duration: '20s',
       type: 'free',
-      image: '🎓',
+      video: videos[8],
       description: 'Online course introduction'
     },
     {
@@ -315,7 +328,7 @@ const TEMPLATES_DATA = {
       name: 'Tutorial Outline',
       duration: '30s',
       type: 'free',
-      image: '📺',
+      video: videos[9],
       description: 'Tutorial step outline'
     },
     {
@@ -323,7 +336,7 @@ const TEMPLATES_DATA = {
       name: 'Lecture Intro',
       duration: '25s',
       type: 'premium',
-      image: '📚',
+      video: videos[10],
       description: 'Lecture introduction template'
     },
     {
@@ -331,7 +344,7 @@ const TEMPLATES_DATA = {
       name: 'Lesson Recap',
       duration: '40s',
       type: 'premium',
-      image: '📝',
+      video: videos[0],
       description: 'Lesson recap template'
     },
     {
@@ -339,7 +352,7 @@ const TEMPLATES_DATA = {
       name: 'Q&A Session',
       duration: '45s',
       type: 'free',
-      image: '❓',
+      video: videos[1],
       description: 'Q&A session template'
     },
     {
@@ -347,7 +360,7 @@ const TEMPLATES_DATA = {
       name: 'Certificate Award',
       duration: '30s',
       type: 'premium',
-      image: '🏆',
+      video: videos[2],
       description: 'Certificate achievement video'
     }
   ]
@@ -430,7 +443,7 @@ export const Category = () => {
                 <div key={template.id} className="template-card">
                   {/* Preview */}
                   <div className="template-preview">
-                    <div className="preview-emoji">{template.image}</div>
+                    <video src={template.video} className="preview-video" muted autoPlay loop />
                     <button className="preview-btn" title="Preview">
                       <FiPlay />
                     </button>
