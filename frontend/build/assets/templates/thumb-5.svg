@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
+  <defs>
+    <linearGradient id="g5" x1="0" x2="1">
+      <stop offset="0" stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#60A5FA"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" rx="18" fill="url(#g5)"/>
+  <g transform="translate(40,40)" fill="#fff" font-family="Inter, Arial">
+    <text x="14" y="48" font-size="28" font-weight="700">Travel Vlog Opener</text>
+    <text x="14" y="84" font-size="13" opacity="0.95">Adventure-themed title cards</text>
+    <rect x="420" y="220" width="120" height="60" rx="8" fill="rgba(255,255,255,0.08)"/>
+  </g>
+</svg>

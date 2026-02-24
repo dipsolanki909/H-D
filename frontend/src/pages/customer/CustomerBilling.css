@@ -1,0 +1,250 @@
+@keyframes billFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.customer-billing-page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #f8fafc;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 16px;
+  padding: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+  animation: billFadeUp 0.45s ease;
+}
+
+.billing-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.billing-header p {
+  margin: 8px 0 0;
+  color: #6b7280;
+}
+
+.plan-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.plan-head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #111827;
+}
+
+.plan-head p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 0.86rem;
+}
+
+.billing-primary-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.plan-features {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.plan-features li {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: #374151;
+  font-size: 0.88rem;
+}
+
+.plan-features svg {
+  color: #4f46e5;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title-row h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #111827;
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.section-title-row span {
+  color: #6b7280;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.credit-track {
+  margin-top: 12px;
+  width: 100%;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(102, 126, 234, 0.13);
+  overflow: hidden;
+}
+
+.credit-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.billing-table-wrap {
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+.billing-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.billing-table th,
+.billing-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  text-align: left;
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.billing-table th {
+  color: #374151;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.invoice-status {
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-weight: 700;
+  font-size: 0.72rem;
+}
+
+.invoice-status.paid {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.invoice-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.download-btn {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #fff;
+  border-radius: 10px;
+  padding: 7px 10px;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.plans-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.plan-card {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plan-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.1);
+}
+
+.plan-card.featured {
+  border-color: rgba(102, 126, 234, 0.45);
+  box-shadow: 0 10px 24px rgba(102, 126, 234, 0.2);
+}
+
+.plan-card h4 {
+  margin: 0;
+  color: #111827;
+}
+
+.plan-price {
+  margin: 4px 0 10px;
+  color: #4f46e5;
+  font-weight: 700;
+}
+
+.plan-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.plan-card li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #4b5563;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 980px) {
+  .plans-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .plan-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+}

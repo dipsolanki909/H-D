@@ -1,0 +1,137 @@
+.footer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #e5e7eb;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 48px 20px 0;
+}
+
+.footer-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+.footer-col {
+  min-width: 0;
+}
+
+.footer-col h4 {
+  margin: 0 0 14px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.footer-about-text {
+  margin: 0;
+  color: #c4c9d4;
+  line-height: 1.7;
+  font-size: 0.95rem;
+  max-width: 300px;
+}
+
+.footer-links-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links-list li {
+  margin: 0 0 10px;
+}
+
+.footer-col a,
+.footer-link-button {
+  color: #b6becd;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.footer-col a:hover,
+.footer-link-button:hover {
+  color: #ffffff;
+}
+
+.footer-contact {
+  margin: 0;
+  font-style: normal;
+}
+
+.footer-contact p {
+  margin: 0 0 10px;
+  color: #b6becd;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.social-icons {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.social-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.footer-bottom {
+  margin-top: 34px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  text-align: center;
+}
+
+.footer-copyright {
+  margin: 0;
+  color: #aeb6c5;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 640px) {
+  .footer-container {
+    padding: 52px 24px 0;
+  }
+
+  .footer-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 28px;
+  }
+}
+
+@media (min-width: 992px) {
+  .footer-main {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 34px;
+  }
+}

@@ -1,0 +1,17 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* define footer height here so main can reserve space reliably */
+  --footer-height: 240px;
+}
+
+.layout-main {
+  flex: 1;
+  width: 100%;
+}
+
+.footer {
+  flex-shrink: 0; /* ensure footer doesn't collapse */
+}
+
