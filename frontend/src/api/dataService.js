@@ -1,5 +1,5 @@
 // Simple localStorage-backed data service for templates and pricing
-const STORAGE_KEY = 'video_studio_data_v1';
+const STORAGE_KEY = 'video_studio_data_v2';
 
 const DEFAULTS = {
   templates: [
@@ -30,6 +30,15 @@ const DEFAULTS = {
     { id: 't-22', name: 'Course Intro', category: 'Education', duration: '30s', type: 'premium', image: '/assets/templates/thumb-5.svg', description: 'Intro sequence for online courses' },
     { id: 't-23', name: 'Announcement Post', category: 'Business Promo', duration: '12s', type: 'free', image: '/assets/templates/thumb-4.svg', description: 'Fast announcement with CTA button' },
     { id: 't-24', name: 'Holiday Greeting', category: 'Birthday', duration: '28s', type: 'free', image: '/assets/templates/thumb-6.svg', description: 'Festive greetings with animated snow/confetti' },
+    { id: 't-25', name: 'New Cinematic Intro', category: 'YouTube', duration: '12s', type: 'premium', featured: true, image: '/assets/templates/thumb-1.svg', description: 'Epic cinematic opener with title animations' },
+    { id: 't-26', name: 'New Fast Social Reel', category: 'Instagram Reels', duration: '15s', type: 'free', image: '/assets/templates/thumb-2.svg', description: 'Vertical fast-cuts optimized for engagement' },
+    { id: 't-27', name: 'New Wedding Slideshow', category: 'Wedding', duration: '60s', type: 'premium', image: '/assets/templates/thumb-3.svg', description: 'Elegant slideshow with soft fades and overlays' },
+    { id: 't-28', name: 'Another Cinematic Intro', category: 'YouTube', duration: '12s', type: 'premium', featured: true, image: '/assets/templates/thumb-1.svg', description: 'Epic cinematic opener with title animations' },
+    { id: 't-29', name: 'Another Fast Social Reel', category: 'Instagram Reels', duration: '15s', type: 'free', image: '/assets/templates/thumb-2.svg', description: 'Vertical fast-cuts optimized for engagement' },
+    { id: 't-30', name: 'Another Wedding Slideshow', category: 'Wedding', duration: '60s', type: 'premium', image: '/assets/templates/thumb-3.svg', description: 'Elegant slideshow with soft fades and overlays' },
+    { id: 't-31', name: 'Extra Product Promo', category: 'Business Promo', duration: '30s', type: 'premium', featured: true, image: '/assets/templates/thumb-4.svg', description: 'Sleek product showcase with CTA and specs' },
+    { id: 't-32', name: 'Extra Travel Vlog Opener', category: 'YouTube', duration: '12s', type: 'free', featured: true, image: '/assets/templates/thumb-5.svg', description: 'Bold travel titles and energetic cuts' },
+    { id: 't-33', name: 'Extra Recipe Quick Reel', category: 'Instagram Reels', duration: '20s', type: 'free', image: '/assets/templates/thumb-6.svg', description: 'Step-by-step cooking reel with timers' },
   ],
   pricing: [
     { id: 'p-1', name: 'Free', price: 0, features: ['Up to 5 projects', '480p export'] },

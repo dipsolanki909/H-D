@@ -15,11 +15,13 @@ const pricingRoutes = require('./routes/pricingRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 const aiRoutes = require('./routes/aiRoutes');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+  app.use(cors());
 
 const options = {
   definition: {
