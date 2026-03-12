@@ -1,13 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { FiPlay, FiZap, FiShare2, FiUsers, FiAward, FiArrowRight, FiCheck, FiFilm, FiMusic, FiEdit3, FiYoutube, FiGift, FiBriefcase, FiBookOpen, FiLayout, FiEdit, FiSend, FiSmile, FiDollarSign, FiLifeBuoy } from 'react-icons/fi';
 import './Home.css';
 import whyChooseUsImage from '../assets/guentherdillingen-photographer-3804979.jpg';
 
 export const Home = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
 
   const features = [
     {
@@ -143,11 +141,7 @@ export const Home = () => {
   ];
 
   const handleGetStarted = () => {
-    if (user) {
-      navigate('/dashboard');
-    } else {
-      navigate('/register');
-    }
+    navigate('/register');
   };
 
   const scrollToSection = (id) => {
@@ -173,7 +167,7 @@ export const Home = () => {
             
             <div className="hero-cta">
               <button className="btn-primary-hero" onClick={handleGetStarted}>
-                {user ? 'Go to Dashboard' : 'Start Creating Free'} <FiArrowRight />
+                Start Creating Free <FiArrowRight />
               </button>
               <button className="btn-secondary-hero" onClick={() => scrollToSection('features')}>
                 Explore Features
@@ -544,7 +538,7 @@ export const Home = () => {
           <h2>Ready to Create Something Amazing?</h2>
           <p>Join thousands of creators making professional videos every day</p>
           <button className="btn-primary-hero large" onClick={handleGetStarted}>
-            {user ? 'Go to Dashboard' : 'Start Free Today'} <FiArrowRight />
+            Start Free Today <FiArrowRight />
           </button>
           <p className="cta-note">No credit card required • Free forever plan available</p>
         </div>

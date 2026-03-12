@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../utils/appStore';
-import { useAuth } from '../context/AuthContext';
 import { FiDownload, FiCheckCircle } from 'react-icons/fi';
 import '../components/Export/Export.css';
 
@@ -21,7 +20,6 @@ const FORMAT_OPTIONS = [
 export const Export = () => {
   const navigate = useNavigate();
   const store = useAppStore();
-  const { user } = useAuth();
   const [selectedResolution, setSelectedResolution] = useState('hd');
   const [selectedFormat, setSelectedFormat] = useState('mp4');
   const [isExporting, setIsExporting] = useState(false);
@@ -33,7 +31,6 @@ export const Export = () => {
 
   const canDownload = (resolution) => {
     if (resolution.free) return true;
-    if (user?.isPremium) return true;
     if (store.isPremium) return true;
     return false;
   };
@@ -168,7 +165,7 @@ export const Export = () => {
                 </div>
                 <div className="detail-row">
                   <span>Watermark:</span>
-                  <strong>{store.isPremium || user?.isPremium ? 'Removed' : 'Included'}</strong>
+                  <strong>{store.isPremium ? 'Removed' : 'Included'}</strong>
                 </div>
                 <div className="detail-row">
                   <span>Estimated Size:</span>

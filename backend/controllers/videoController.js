@@ -1,64 +1,72 @@
-let videos = [];
+const Video = require('../models/videoModel');
 
-const uploadVideo = (req, res) => {
-  const { title, description } = req.body;
-  if (!title) {
-    return res.status(400).json({ success: false, message: 'title is required' });
+const uploadVideo = async (req, res) => {
+  try {
+    const { title, description, s3Key } = req.body;
+    // Assuming user is available in req.user from an auth middleware
+    const user = req.user.id; 
+    const newVideo = await Video.create({ title, description, s3Key, user });
+    res.status(201).json({ success: true, message: 'Video uploaded', data: newVideo });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
-
-  const video = {
-    id: videos.length + 1,
-    title,
-    description: description || '',
-    createdAt: new Date().toISOString()
-  };
-
-  videos.push(video);
-  return res.status(201).json({ success: true, message: 'Video uploaded', data: video });
 };
 
-const getVideos = (_req, res) => {
-  return res.status(200).json({ success: true, data: videos });
+const getVideos = async (req, res) => {
+  try {
+    // Assuming user is available in req.user from an auth middleware
+    const videos = await Video.find({ user: req.user.id });
+    res.status(200).json({ success: true, data: videos });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
-const getVideoById = (req, res) => {
-  const id = Number(req.params.id);
-  const video = videos.find((item) => item.id === id);
-  if (!video) {
-    return res.status(404).json({ success: false, message: 'Video not found' });
+const getVideoById = async (req, res) => {
+  try {
+    const video = await Video.findById(req.params.id);
+    if (!video) {
+      return res.status(404).json({ success: false, message: 'Video not found' });
+    }
+    // Optional: Check if the video belongs to the user
+    // if (video.user.toString() !== req.user.id) {
+    //   return res.status(403).json({ success: false, message: 'User not authorized' });
+    // }
+    res.status(200).json({ success: true, data: video });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-  return res.status(200).json({ success: true, data: video });
 };
 
-const deleteVideo = (req, res) => {
-  const id = Number(req.params.id);
-  const index = videos.findIndex((item) => item.id === id);
-  if (index === -1) {
-    return res.status(404).json({ success: false, message: 'Video not found' });
+const deleteVideo = async (req, res) => {
+  try {
+    const video = await Video.findByIdAndDelete(req.params.id);
+    if (!video) {
+      return res.status(404).json({ success: false, message: 'Video not found' });
+    }
+    res.status(200).json({ success: true, message: 'Video deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-  videos.splice(index, 1);
-  return res.status(200).json({ success: true, message: 'Video deleted successfully' });
 };
 
-const updateVideo = (req, res) => {
-  const id = Number(req.params.id);
-  const video = videos.find((item) => item.id === id);
-  if (!video) {
-    return res.status(404).json({ success: false, message: 'Video not found' });
+const updateVideo = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const updatedVideo = await Video.findByIdAndUpdate(req.params.id, { title, description }, { new: true });
+    if (!updatedVideo) {
+      return res.status(404).json({ success: false, message: 'Video not found' });
+    }
+    res.status(200).json({ success: true, message: 'Video updated successfully', data: updatedVideo });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-
-  video.title = req.body.title || video.title;
-  video.description = req.body.description || video.description;
-  return res.status(200).json({ success: true, message: 'Video updated successfully', data: video });
 };
 
 const getVideoMetadata = (req, res) => {
-  const id = Number(req.params.id);
-  const video = videos.find((item) => item.id === id);
-  if (!video) {
-    return res.status(404).json({ success: false, message: 'Video not found' });
-  }
-
+  // This seems to be mock data, leaving as is.
+  // In a real scenario, you might get this from the video file itself.
+  const id = req.params.id;
   return res.status(200).json({
     success: true,
     data: {

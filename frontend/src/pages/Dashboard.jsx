@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { useAppStore } from '../utils/appStore';
 import { FiPlus, FiPlay, FiTrash2, FiSettings, FiLogOut } from 'react-icons/fi';
 import { projectAPI, videoAPI } from '../api/client';
@@ -9,7 +8,6 @@ import UploadNewVideo from '../components/Dashboard/UploadNewVideo';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
   const store = useAppStore();
   const [activeTab, setActiveTab] = useState('projects');
   const [projects, setProjects] = useState([]);
@@ -68,11 +66,6 @@ export const Dashboard = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
   return (
     <div className="dashboard-container">
       {/* Header */}
@@ -82,12 +75,10 @@ export const Dashboard = () => {
           
         </div>
         <div className="header-right">
-          {user?.role === 'admin' && (
-            <button className="btn-icon" onClick={() => navigate('/admin')}>
-              <FiSettings size={20} />
-              Admin
-            </button>
-          )}
+          <button className="btn-icon" onClick={() => navigate('/admin')}>
+            <FiSettings size={20} />
+            Admin
+          </button>
         </div>
       </header>
 

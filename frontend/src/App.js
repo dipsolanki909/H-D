@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
 import { Layout } from './components/Layout/Layout';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
@@ -36,30 +35,10 @@ import { Editing } from './pages/Editing';
 import './App.css';
 
 function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return <div className="loading-screen">Loading...</div>;
-  }
-
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
-
   return children;
 }
 
 function AdminRoute({ children }) {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return <div className="loading-screen">Loading...</div>;
-  }
-
-  if (!user || user.role !== 'admin') {
-    return <Navigate to="/dashboard" />;
-  }
-
   return children;
 }
 
@@ -275,11 +254,9 @@ function AppContent() {
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <Layout>
-          <AppContent />
-        </Layout>
-      </AuthProvider>
+      <Layout>
+        <AppContent />
+      </Layout>
     </Router>
   );
 }

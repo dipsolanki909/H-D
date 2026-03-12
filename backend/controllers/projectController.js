@@ -1,76 +1,82 @@
-let projects = [];
+const Project = require('../models/projectModel');
 
-const createProject = (req, res) => {
-  const { name, description } = req.body;
-  if (!name) {
-    return res.status(400).json({ success: false, message: 'name is required' });
+const createProject = async (req, res) => {
+  try {
+    const { name, description } = req.body;
+    const project = await Project.create({ name, description, user: req.user.id });
+    res.status(201).json({ success: true, message: 'Project created', data: project });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
-
-  const project = {
-    id: projects.length + 1,
-    name,
-    description: description || '',
-    videoIds: []
-  };
-
-  projects.push(project);
-  return res.status(201).json({ success: true, message: 'Project created', data: project });
 };
 
-const getProjects = (_req, res) => {
-  return res.status(200).json({ success: true, data: projects });
+const getProjects = async (req, res) => {
+  try {
+    const projects = await Project.find({ user: req.user.id });
+    res.status(200).json({ success: true, data: projects });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
-const getProjectById = (req, res) => {
-  const id = Number(req.params.id);
-  const project = projects.find((item) => item.id === id);
-  if (!project) {
-    return res.status(404).json({ success: false, message: 'Project not found' });
+const getProjectById = async (req, res) => {
+  try {
+    const project = await Project.findOne({ _id: req.params.id, user: req.user.id }).populate('videos');
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'Project not found' });
+    }
+    res.status(200).json({ success: true, data: project });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-  return res.status(200).json({ success: true, data: project });
 };
 
-const updateProject = (req, res) => {
-  const id = Number(req.params.id);
-  const project = projects.find((item) => item.id === id);
-  if (!project) {
-    return res.status(404).json({ success: false, message: 'Project not found' });
+const updateProject = async (req, res) => {
+  try {
+    const { name, description } = req.body;
+    const project = await Project.findOneAndUpdate(
+      { _id: req.params.id, user: req.user.id },
+      { name, description },
+      { new: true }
+    );
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'Project not found' });
+    }
+    res.status(200).json({ success: true, message: 'Project updated', data: project });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-
-  project.name = req.body.name || project.name;
-  project.description = req.body.description || project.description;
-  return res.status(200).json({ success: true, message: 'Project updated', data: project });
 };
 
-const deleteProject = (req, res) => {
-  const id = Number(req.params.id);
-  const index = projects.findIndex((item) => item.id === id);
-  if (index === -1) {
-    return res.status(404).json({ success: false, message: 'Project not found' });
+const deleteProject = async (req, res) => {
+  try {
+    const project = await Project.findOneAndDelete({ _id: req.params.id, user: req.user.id });
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'Project not found' });
+    }
+    res.status(200).json({ success: true, message: 'Project deleted' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-
-  projects.splice(index, 1);
-  return res.status(200).json({ success: true, message: 'Project deleted' });
 };
 
-const assignVideoToProject = (req, res) => {
-  const id = Number(req.params.id);
-  const { videoId } = req.body;
+const assignVideoToProject = async (req, res) => {
+  try {
+    const { videoId } = req.body;
+    const project = await Project.findOneAndUpdate(
+      { _id: req.params.id, user: req.user.id },
+      { $addToSet: { videos: videoId } },
+      { new: true }
+    );
 
-  const project = projects.find((item) => item.id === id);
-  if (!project) {
-    return res.status(404).json({ success: false, message: 'Project not found' });
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'Project not found' });
+    }
+
+    res.status(200).json({ success: true, message: 'Video assigned to project', data: project });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
-
-  if (!videoId) {
-    return res.status(400).json({ success: false, message: 'videoId is required' });
-  }
-
-  if (!project.videoIds.includes(videoId)) {
-    project.videoIds.push(videoId);
-  }
-
-  return res.status(200).json({ success: true, message: 'Video assigned to project', data: project });
 };
 
 module.exports = {

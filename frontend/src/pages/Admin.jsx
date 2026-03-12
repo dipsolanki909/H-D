@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { adminAPI } from '../api/client';
 import AdminLayout from '../components/Admin/AdminLayout';
 import '../components/Admin/Admin.css';
@@ -27,7 +26,6 @@ import {
 
 export const AdminPanel = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
 
   const [users, setUsers] = useState([]);
   const [stats, setStats] = useState({});
@@ -36,13 +34,9 @@ export const AdminPanel = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   useEffect(() => {
-    if (user?.role !== 'admin') {
-      navigate('/dashboard');
-      return;
-    }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.role]);
+  }, []);
 
   const fetchData = async () => {
     setLoading(true);
@@ -223,7 +217,7 @@ export const AdminPanel = () => {
               >
                 <div className="admin-avatar">AD</div>
                 <div className="admin-profile-meta">
-                  <strong>{user?.fullName || 'Admin'}</strong>
+                  <strong>Admin</strong>
                   <small>Super Admin</small>
                 </div>
               </button>

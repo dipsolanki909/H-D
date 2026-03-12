@@ -1,50 +1,76 @@
-const users = [];
+const User = require('../models/userModel');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-const register = (req, res) => {
-  const { email, password, fullName } = req.body;
+const register = async (req, res) => {
+  const { name, email, password } = req.body;
 
-  if (!email || !password || !fullName) {
-    return res.status(400).json({ success: false, message: 'email, password, fullName are required' });
+  if (!name || !email || !password) {
+    return res.status(400).json({ success: false, message: 'name, email, and password are required' });
   }
 
-  const exists = users.find((item) => item.email === email);
-  if (exists) {
-    return res.status(400).json({ success: false, message: 'User already exists' });
+  try {
+    const userExists = await User.findOne({ email });
+
+    if (userExists) {
+      return res.status(400).json({ success: false, message: 'User already exists' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    if (user) {
+      res.status(201).json({
+        success: true,
+        message: 'User registered successfully',
+        data: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          token: generateToken(user._id),
+        },
+      });
+    } else {
+      res.status(400).json({ success: false, message: 'Invalid user data' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-
-  const user = {
-    id: users.length + 1,
-    email,
-    fullName,
-    role: req.body.role || 'user'
-  };
-
-  users.push({ ...user, password });
-
-  return res.status(201).json({
-    success: true,
-    message: 'User registered successfully',
-    data: user
-  });
 };
 
-const login = (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ success: false, message: 'email and password are required' });
   }
 
-  const user = users.find((item) => item.email === email && item.password === password);
-  if (!user) {
-    return res.status(401).json({ success: false, message: 'Invalid credentials' });
-  }
+  try {
+    const user = await User.findOne({ email });
 
-  return res.status(200).json({
-    success: true,
-    message: 'Login successful',
-    token: `demo-token-${user.id}`
-  });
+    if (user && (await bcrypt.compare(password, user.password))) {
+      res.json({
+        success: true,
+        message: 'Login successful',
+        data: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          token: generateToken(user._id),
+        },
+      });
+    } else {
+      res.status(401).json({ success: false, message: 'Invalid credentials' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
 const logout = (_req, res) => {
@@ -64,13 +90,16 @@ const refresh = (req, res) => {
   });
 };
 
-const me = (_req, res) => {
+const me = async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ success: false, message: 'Not authorized' });
+    }
   return res.status(200).json({
     success: true,
     data: {
-      id: 1,
-      email: 'demo@dhcreatives.com',
-      fullName: 'Demo User',
+      id: req.user._id,
+      email: req.user.email,
+      fullName: req.user.name,
       role: 'user'
     }
   });
@@ -97,6 +126,13 @@ const resetPassword = (req, res) => {
   return res.status(200).json({
     success: true,
     message: 'Password reset successful'
+  });
+};
+
+// Generate JWT
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: '30d',
   });
 };
 

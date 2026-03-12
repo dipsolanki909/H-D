@@ -1,16 +1,17 @@
-
-
 const express = require('express');
 const { body } = require('express-validator');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const validate = require('../middleware/validationMiddleware');
+const { protect } = require('../middleware/authMiddleware');
+
+router.use(protect);
 
 /**
  * @swagger
  * tags:
  *   name: Users
- *   description: User CRUD API
+ *   description: User management
  */
 
 /**
@@ -23,7 +24,7 @@ const validate = require('../middleware/validationMiddleware');
  *       200:
  *         description: List of users
  */
-router.get('/users', userController.getUsers);
+router.get('/', userController.getUsers);
 
 /**
  * @swagger
@@ -37,14 +38,14 @@ router.get('/users', userController.getUsers);
  *         required: true
  *         description: User ID
  *         schema:
- *           type: integer
+ *           type: string
  *     responses:
  *       200:
  *         description: User found
  *       404:
  *         description: User not found
  */
-router.get('/users/:id', userController.getUserById);
+router.get('/:id', userController.getUserById);
 
 /**
  * @swagger
@@ -60,19 +61,29 @@ router.get('/users/:id', userController.getUserById);
  *             type: object
  *             required:
  *               - name
+ *               - email
+ *               - password
  *             properties:
  *               name:
  *                 type: string
  *                 example: Dipali
+ *               email:
+ *                 type: string
+ *                 example: dipali@example.com
+ *               password:
+ *                 type: string
+ *                 example: password123
  *     responses:
  *       201:
  *         description: User created
  */
 router.post(
-  '/users',
+  '/',
   body('name')
     .notEmpty().withMessage('Name is required')
     .isLength({ min: 3 }).withMessage('Name must be at least 3 characters'),
+  body('email').isEmail().withMessage('Provide a valid email'),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
   validate,
   userController.createUser
 );
@@ -88,7 +99,7 @@ router.post(
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -104,7 +115,7 @@ router.post(
  *         description: User updated
  */
 router.put(
-  '/users/:id',
+  '/:id',
   body('name')
     .notEmpty().withMessage('Name is required')
     .isLength({ min: 3 }).withMessage('Name must be at least 3 characters'),
@@ -123,18 +134,12 @@ router.put(
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *     responses:
  *       200:
  *         description: User deleted
  */
-router.delete('/users/:id', userController.deleteUser);
+router.delete('/:id', userController.deleteUser);
 
-router.get('/users/me', userController.getMe);
-router.put('/users/me', userController.updateMe);
-router.put('/users/me/password', userController.updateMyPassword);
-router.put('/users/me/notifications', userController.updateMyNotifications);
-router.delete('/users/me', userController.deleteMe);
-router.get('/users/me/templates/favorites', userController.getFavoriteTemplates);
 
 module.exports = router;

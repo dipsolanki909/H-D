@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 import { FiMenu, FiX, FiSettings, FiChevronDown } from 'react-icons/fi';
 import './Header.css';
 
@@ -16,15 +15,8 @@ const CATEGORIES = [
 export const Header = ({ isAdmin = false, isCustomer = false }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = React.useState(false);
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-    setIsMenuOpen(false);
-  };
 
   const handleCategorySelect = (categoryId) => {
     navigate(`/category/${categoryId}`);
@@ -134,32 +126,11 @@ export const Header = ({ isAdmin = false, isCustomer = false }) => {
         )}
 
         {/* Auth Section */}
-        {user ? (
-          <div className="header-user">
-            {!isAdmin && (
-              <>
-                <div className="user-info">
-                  <span className="user-name">{user?.name || 'User'}</span>
-                  <span className="user-role">{user?.role}</span>
-                </div>
-                <button className="icon-button" title="Settings">
-                  <FiSettings />
-                </button>
-              </>
-            )}
-            <button className="btn-secondary btn-logout" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        ) : (
-          !isAdmin && (
-            <div className="header-auth">
-              <Link to="/login" className="btn-secondary">
-                Login
-              </Link>
-            </div>
-          )
-        )}
+        <div className="header-auth">
+          <Link to="/login" className="btn-secondary">
+            Login
+          </Link>
+        </div>
 
         {/* Mobile Menu Toggle */}
         {!isAdmin && !isCustomerRoute && (

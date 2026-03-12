@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { authAPI } from '../api/client';
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiFilm } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import './Auth.css';
@@ -8,7 +8,6 @@ import './Signup.css';
 
 export const Signup = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,6 +16,7 @@ export const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [agreed, setAgreed] = useState(false);
 
   const getPasswordStrength = (value) => {
@@ -37,6 +37,7 @@ export const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
     setLoading(true);
 
     try {
@@ -71,21 +72,13 @@ export const Signup = () => {
         return;
       }
 
-      // Persist demo user so they can log in later
-      try {
-        // username == email for this demo app (login accepts username or email)
-        const added = require('../api/authService').addUser({ username: email, email, password, name, role: 'user' });
-        // call login with stored user (omit password)
-        const { password: _p, ...storedUser } = added;
-        login(storedUser, 'usertoken-abc');
-        navigate('/dashboard');
-      } catch (dupErr) {
-        setError('A user with that email already exists');
-        setLoading(false);
-        return;
-      }
+      await authAPI.register(email, password, name);
+      setSuccess('Registration successful! You can now log in.');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError(err.response?.data?.message || 'An error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -114,6 +107,7 @@ export const Signup = () => {
 
             <h2>Create Account</h2>
             {error && <div className="error-message">{error}</div>}
+            {success && <div className="success-message">{success}</div>}
 
             <div className="form-group modern-signup-field">
               <label htmlFor="name">Full Name</label>

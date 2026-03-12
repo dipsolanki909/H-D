@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { authAPI } from '../api/client';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiFilm } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import './Auth.css';
@@ -8,7 +8,6 @@ import './Login.css';
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -29,33 +28,11 @@ export const Login = () => {
         return;
       }
 
-      // Validate credentials against demo accounts and persisted users
-      const demoAccounts = [
-        { username: 'admin', password: 'admin123', id: 'admin-1', email: 'admin@videostudio.com', role: 'admin', token: 'admintoken-xyz' },
-        { username: 'demo', password: 'demo123', id: '1', email: undefined, role: 'user', token: 'usertoken-abc' },
-      ];
-
-      const demoMatch = demoAccounts.find(a => (a.username === username || a.email === username) && a.password === password);
-      if (demoMatch) {
-        const user = { id: demoMatch.id, name: demoMatch.username, email: demoMatch.email, role: demoMatch.role, isPremium: false };
-        login(user, demoMatch.token);
-        navigate(demoMatch.role === 'admin' ? '/admin' : '/customer/dashboard');
-        return;
-      }
-
-      // Try persisted users (accept username or email as identifier)
-      const authService = require('../api/authService');
-      const persisted = authService.authenticate(username, password);
-      if (!persisted) {
-        setError('Invalid username or password');
-        setLoading(false);
-        return;
-      }
-
-      login(persisted, 'usertoken-abc');
-      navigate('/customer/dashboard');
+      const response = await authAPI.login(username, password);
+      localStorage.setItem('token', response.data.token);
+      navigate('/dashboard');
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError(err.response?.data?.message || 'An error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
