@@ -32,13 +32,22 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { Pricing } from './pages/Pricing';
 import { Editing } from './pages/Editing';
-import './App.css';
+import './App.css?v=2';
 
 function ProtectedRoute({ children }) {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
   return children;
 }
 
 function AdminRoute({ children }) {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+  if (!token || role !== 'admin') {
+    return <Navigate to="/login" />;
+  }
   return children;
 }
 

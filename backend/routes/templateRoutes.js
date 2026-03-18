@@ -1,6 +1,6 @@
 const express = require('express');
 const controller = require('../controllers/templateController');
-const { protect } = require('../middleware/authMiddleware');
+
 
 const router = express.Router();
 
@@ -123,7 +123,7 @@ router.post('/apply', controller.applyTemplate);
  *       200:
  *         description: Template favorited
  */
-router.post('/:id/favorite', protect, controller.favoriteTemplate);
+router.post('/:id/favorite', controller.favoriteTemplate);
 
 /**
  * @swagger
@@ -142,7 +142,7 @@ router.post('/:id/favorite', protect, controller.favoriteTemplate);
  *       200:
  *         description: Template unfavorited
  */
-router.delete('/:id/favorite', protect, controller.unfavoriteTemplate);
+router.delete('/:id/favorite', controller.unfavoriteTemplate);
 
 module.exports = router;
 

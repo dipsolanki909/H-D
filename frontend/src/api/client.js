@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = 'http://localhost:5000';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -20,11 +20,19 @@ apiClient.interceptors.request.use((config) => {
 
 // Auth APIs
 export const authAPI = {
-  register: (email, password, fullName, role = 'user') =>
-    apiClient.post('/auth/register', { email, password, fullName, role }),
+  register: (email, password, name, role = 'user') =>
+    apiClient.post('/auth/register', { email, password, name, role }),
 
-  login: (email, password) =>
-    apiClient.post('/auth/login', { email, password }),
+  login: (loginIdentifier, password) => {
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginIdentifier);
+    const payload = { password };
+    if (isEmail) {
+      payload.email = loginIdentifier;
+    } else {
+      payload.username = loginIdentifier;
+    }
+    return apiClient.post('/auth/login', payload);
+  },
 
   logout: () => localStorage.removeItem('token'),
 

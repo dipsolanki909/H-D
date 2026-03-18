@@ -29,9 +29,17 @@ export const Login = () => {
       }
 
       const response = await authAPI.login(username, password);
-      localStorage.setItem('token', response.data.token);
-      navigate('/dashboard');
+      const { accessToken, user } = response.data;
+      localStorage.setItem('token', accessToken);
+      localStorage.setItem('role', user.role);
+
+      if (user.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/customer/dashboard');
+      }
     } catch (err) {
+      console.error('Login failed:', err);
       setError(err.response?.data?.message || 'An error occurred. Please try again.');
     } finally {
       setLoading(false);
@@ -63,14 +71,14 @@ export const Login = () => {
             {error && <div className="error-message">{error}</div>}
 
             <div className="form-group modern-field">
-              <label htmlFor="username">Email</label>
+              <label htmlFor="username">Email or Username</label>
               <span className="input-icon"><FiMail /></span>
               <input
                 type="text"
                 id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your email"
+                placeholder="Enter your email or username"
                 required
               />
             </div>

@@ -2,11 +2,10 @@ const express = require('express');
 const controller = require('../controllers/projectController');
 const { body } = require('express-validator');
 const validate = require('../middleware/validationMiddleware');
-const { protect } = require('../middleware/authMiddleware');
+
 
 const router = express.Router();
 
-router.use(protect);
 
 /**
  * @swagger

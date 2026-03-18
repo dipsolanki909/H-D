@@ -72,10 +72,19 @@ export const Signup = () => {
         return;
       }
 
-      await authAPI.register(email, password, name);
-      setSuccess('Registration successful! You can now log in.');
+      const response = await authAPI.register(email, password, name);
+      const { token, user } = response.data;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', user.role);
+      
+      setSuccess('Registration successful! Redirecting to dashboard...');
       setTimeout(() => {
-        navigate('/login');
+        if (user.role === 'admin') {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/customer/dashboard');
+        }
       }, 2000);
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred. Please try again.');

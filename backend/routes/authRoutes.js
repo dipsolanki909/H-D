@@ -1,24 +1,23 @@
 const express = require('express');
-const controller = require('../controllers/authController');
-const { body } = require('express-validator');
-const { protect } = require('../middleware/authMiddleware');
-const validate = require('../middleware/validationMiddleware');
-
+const { body, oneOf } = require('express-validator');
 const router = express.Router();
+const authController = require('../controllers/authController');
+const validate = require('../middleware/validationMiddleware');
 
 /**
  * @swagger
  * tags:
- *   name: Auth
- *   description: User authentication
+ *   name: Authentication
+ *   description: Register CRUD API
  */
 
 /**
  * @swagger
  * /auth/register:
  *   post:
- *     summary: User registration
- *     tags: [Auth]
+ *     summary: Create new register
+ *     tags: [Authentication]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -32,105 +31,116 @@ const router = express.Router();
  *             properties:
  *               name:
  *                 type: string
+ *                 example: Dipali
  *               email:
  *                 type: string
+ *                 example: dipali@gmail.com
  *               password:
  *                 type: string
+ *                 example: 123456
+ *               phone:
+ *                 type: string
+ *                 example: 9876543210
+ *               gender:
+ *                 type: string
+ *                 example: female
+ *               emailOtp:
+ *                 type: string
+ *                 example: 1234
+ *               address:
+ *                 type: string
+ *                 example: Surat
+ *               pincode:
+ *                 type: string
+ *                 example: 395006
  *     responses:
  *       201:
- *         description: User registered successfully
+ *         description: Register created
  *       400:
- *         description: Bad request
+ *         description: Invalid request
+ *       401:
+ *         description: Unauthorized access
+ *       404:
+ *         description: Register not found
+ *       500:
+ *         description: Internal server error
  */
 router.post(
-    '/register',
-    body('name').notEmpty().withMessage('Name is required'),
-    body('email').isEmail().withMessage('Provide a valid email'),
-    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
-    validate,
-    controller.register
+  '/register',
+  body('name')
+    .notEmpty().withMessage('Name is required')
+    .isLength({ min: 3 }).withMessage('Name must be at least 3 characters'),
+
+  body('email')
+    .notEmpty().withMessage('Email is required')
+    .isEmail().withMessage('Valid email is required'),
+
+  body('password')
+    .notEmpty().withMessage('Password is required')
+    .isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+
+  body('phone')
+    .optional()
+    .isLength({ min: 10 }).withMessage('Phone must be at least 10 digits'),
+
+  validate,
+  authController.createRegister
 );
 
 /**
  * @swagger
  * /auth/login:
  *   post:
- *     summary: User login
- *     tags: [Auth]
+ *     summary: Login user using email or username and password
+ *     tags: [Authentication]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - email
- *               - password
  *             properties:
  *               email:
  *                 type: string
+ *                 example: dipali@gmail.com
+ *               username:
+ *                 type: string
+ *                 example: Dipali
  *               password:
  *                 type: string
+ *                 example: 123456
+ *             oneOf:
+ *               - required: [email, password]
+ *               - required: [username, password]
  *     responses:
  *       200:
- *         description: User logged in successfully
- *       401:
- *         description: Unauthorized
+ *         description: Login successful
+ *       400:
+ *         description: Invalid credentials
+ *       500:
+ *         description: Internal server error
  */
 router.post(
-    '/login',
-    body('email').isEmail().withMessage('Provide a valid email'),
-    body('password').notEmpty().withMessage('Password is required'),
-    validate,
-    controller.login
+  "/login",
+  oneOf([
+    body('email').isEmail().withMessage('A valid email is required'),
+    body('username').notEmpty().withMessage('Username is required')
+  ]),
+  body('password')
+    .notEmpty().withMessage('Password is required'),
+
+  validate,
+  authController.loginUser
 );
 
 /**
  * @swagger
- * /auth/logout:
+ * /auth/refresh-token:
  *   post:
- *     summary: User logout
- *     tags: [Auth]
- *     responses:
- *       200:
- *         description: User logged out successfully
- */
-router.post('/logout', controller.logout);
-
-/**
- * @swagger
- * /auth/refresh:
- *   post:
- *     summary: Refresh authentication token
- *     tags: [Auth]
- *     responses:
- *       200:
- *         description: Token refreshed successfully
- */
-router.post('/refresh', controller.refresh);
-
-/**
- * @swagger
- * /auth/me:
- *   get:
- *     summary: Get logged-in user profile
- *     tags: [Auth]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: User profile data
- *       401:
- *         description: Unauthorized
- */
-router.get('/me', protect, controller.me);
-
-/**
- * @swagger
- * /auth/forgot-password:
- *   post:
- *     summary: Request a password reset
- *     tags: [Auth]
+ *     summary: Generate new access token using refresh token
+ *     tags: [Authentication]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -138,51 +148,27 @@ router.get('/me', protect, controller.me);
  *           schema:
  *             type: object
  *             required:
- *               - email
+ *               - refreshToken
  *             properties:
- *               email:
+ *               refreshToken:
  *                 type: string
+ *                 example: your_refresh_token_here
  *     responses:
  *       200:
- *         description: Password reset email sent
+ *         description: New access token generated
+ *       401:
+ *         description: Invalid refresh token
+ *       500:
+ *         description: Internal server error
  */
 router.post(
-    '/forgot-password',
-    body('email').isEmail().withMessage('Provide a valid email'),
-    validate,
-    controller.forgotPassword
-);
+  "/refresh-token",
 
-/**
- * @swagger
- * /auth/reset-password:
- *   post:
- *     summary: Reset password with a token
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - token
- *               - newPassword
- *             properties:
- *               token:
- *                 type: string
- *               newPassword:
- *                 type: string
- *     responses:
- *       200:
- *         description: Password has been reset
- */
-router.post(
-    '/reset-password',
-    body('token').notEmpty().withMessage('Token is required'),
-    body('newPassword').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
-    validate,
-    controller.resetPassword
+  body('refreshToken')
+    .notEmpty().withMessage('Refresh token is required'),
+
+  validate,
+  authController.refreshToken
 );
 
 module.exports = router;

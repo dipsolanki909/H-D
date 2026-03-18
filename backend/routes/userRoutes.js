@@ -3,9 +3,7 @@ const { body } = require('express-validator');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const validate = require('../middleware/validationMiddleware');
-const { protect } = require('../middleware/authMiddleware');
 
-router.use(protect);
 
 /**
  * @swagger

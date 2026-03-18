@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../utils/appStore';
 import { FiDownload, FiCheckCircle } from 'react-icons/fi';
-import '../components/Export/Export.css';
+import '../components/Export/Export.css?v=2';
 
 const RESOLUTION_OPTIONS = [
   { id: 'sd', label: '480p (SD)', price: 0, free: true, quality: 'Low' },

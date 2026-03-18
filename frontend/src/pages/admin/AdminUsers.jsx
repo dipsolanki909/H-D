@@ -1,8 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FiDownload, FiEdit2, FiEye, FiPauseCircle, FiSearch, FiTrash2, FiUsers } from 'react-icons/fi';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import AdminLayout from '../../components/Admin/AdminLayout';
 import { adminAPI } from '../../api/client';
 import '../../components/Admin/Admin.css';
+import logo from '../../assets/logo.png';
 
 const PAGE_SIZE = 8;
 
@@ -39,7 +42,8 @@ export const AdminUsers = () => {
       setLoading(true);
       try {
         const response = await adminAPI.getUsers();
-        const incoming = response?.data || [];
+        const usersData = response?.data?.data;
+        const incoming = Array.isArray(usersData) ? usersData : [];
         setUsers(incoming);
       } catch (error) {
         setUsers([
@@ -124,31 +128,44 @@ export const AdminUsers = () => {
     setSelectedIds((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
   };
 
-  const handleExport = () => {
-    const columns = ['Name', 'Email', 'Plan', 'Storage Used', 'AI Credits', 'Join Date', 'Status'];
-    const rows = filteredUsers.map((entry) => [
-      entry.fullName || '',
-      entry.email || '',
-      entry.planLabel,
-      entry.storageLabel,
-      entry.aiCreditsLabel,
-      entry.joinedDate,
-      entry.statusLabel,
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    
+    // Add header
+    doc.addImage(logo, 'PNG', 14, 10, 20, 20);
+    doc.setFontSize(20);
+    doc.text('D & H Creatives', 40, 25);
+    doc.setFontSize(12);
+    doc.text('User List Report', 14, 40);
+
+    // Add table
+    const columns = ['Profile / Initial', 'Name', 'Email', 'Plan', 'Storage Used', 'AI Credits', 'Join Date', 'Status'];
+    const rows = filteredUsers.map(user => [
+      { content: user.fullName ? user.fullName.charAt(0) : '', styles: { halign: 'center' } },
+      user.fullName || '',
+      user.email || '',
+      user.planLabel,
+      user.storageLabel,
+      user.aiCreditsLabel,
+      user.joinedDate,
+      user.statusLabel,
     ]);
 
-    const csvData = [columns, ...rows]
-      .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
-      .join('\n');
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+      startY: 50,
+      didDrawCell: (data) => {
+        if (data.column.index === 0 && data.cell.section === 'body') {
+          const user = filteredUsers[data.row.index];
+          if (user.avatar) {
+            doc.addImage(user.avatar, 'PNG', data.cell.x + 2, data.cell.y + 2, 10, 10);
+          }
+        }
+      },
+    });
 
-    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'admin-users.csv');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    doc.save('admin-users.pdf');
   };
 
   const handleEditUser = async (entry) => {
@@ -218,7 +235,7 @@ export const AdminUsers = () => {
               <option value="Expired Plan">Expired Plan</option>
             </select>
 
-            <button type="button" className="admin-users-export" onClick={handleExport}>
+            <button type="button" className="admin-users-export" onClick={handleExportPDF}>
               <FiDownload /> Export user list
             </button>
           </div>

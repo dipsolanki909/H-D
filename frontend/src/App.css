@@ -267,3 +267,45 @@ html, body, #root {
   margin-top: 4px;
   display: block;
 }
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 1.5rem;
+  }
+
+  .btn-primary-large {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+
+  .btn-secondary-large {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    padding: 1rem;
+  }
+
+  .btn-primary {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+
+  .btn-primary-large {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .btn-secondary {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .btn-secondary-large {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}

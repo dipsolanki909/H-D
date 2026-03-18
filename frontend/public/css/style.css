@@ -926,3 +926,134 @@ nav.main-menu {
     right:0;
     left:-95%;
 }
+
+@media (max-width: 1024px) {
+    .main-menu ul>li {
+        padding-right: 20px;
+    }
+    .banner_left {
+        width: 50%;
+    }
+    .banner_right {
+        width: 50%;
+    }
+    .lorem_text {
+        padding-top: 20%;
+    }
+    .about_bt a {
+        width: 25%;
+    }
+}
+
+@media (max-width: 768px) {
+    .header_section {
+        padding: 15px;
+    }
+    .main-menu {
+        display: none;
+    }
+    .mean-container .mean-nav {
+        display: block !important;
+    }
+    .banner_section {
+        padding: 40px 0;
+    }
+    .banner_left, .banner_right {
+        width: 100%;
+        text-align: center;
+        left: 0;
+    }
+    .banner_right {
+        top: 0;
+    }
+    .usiing_text {
+        font-size: 30px;
+    }
+    .point_text {
+        width: 100%;
+    }
+    .about_section {
+        background-size: cover;
+        padding-bottom: 40px;
+    }
+    .about_text, .Cameras_text {
+        width: 100%;
+        text-align: center;
+        font-size: 30px;
+    }
+    .lorem_text {
+        width: 100%;
+        padding-top: 20px;
+    }
+    .about_bt a {
+        width: 40%;
+        margin: 0 auto;
+        float: none;
+        display: block;
+    }
+    .cameras_section_2 {
+        padding: 0 15px;
+    }
+    .mail_section {
+        padding: 30px;
+    }
+    .send_bt {
+        width: 40%;
+    }
+    .long_text {
+        width: 80%;
+    }
+    .icon_main {
+        width: 100%;
+        text-align: center;
+        float: none;
+    }
+    .icon_main li {
+        float: none;
+        display: inline-block;
+    }
+    .email_bt, .subscribe_bt {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .top_header_section {
+        display: none;
+    }
+    .header_section {
+        padding: 10px;
+    }
+    .logo img {
+        max-width: 150px;
+    }
+    .red_bt a {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .usiing_text {
+        font-size: 24px;
+    }
+    .about_text, .Cameras_text {
+        font-size: 24px;
+    }
+    .get_text {
+        font-size: 30px;
+    }
+    .bt_text a {
+        width: 50%;
+    }
+    .mail_section {
+        padding: 20px;
+    }
+    .send_bt {
+        width: 60%;
+    }
+    .long_text {
+        width: 100%;
+        padding: 0 15px;
+    }
+    .social_icon li {
+        padding-right: 10px;
+    }
+}

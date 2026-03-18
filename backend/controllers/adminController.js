@@ -1,5 +1,19 @@
-const getUsers = (_req, res) => {
-  return res.status(200).json({ success: true, data: [] });
+const User = require('../models/userModel');
+
+const getUsers = async (_req, res) => {
+  try {
+    const users = await User.find({});
+    const sanitizedUsers = users.map(u => ({
+      id: u._id,
+      fullName: u.name,
+      email: u.email,
+      role: u.role,
+      createdAt: u.createdAt,
+    }));
+    res.status(200).json({ success: true, data: sanitizedUsers });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
 };
 
 const getUserById = (req, res) => {

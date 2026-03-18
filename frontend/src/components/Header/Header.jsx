@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { FiMenu, FiX, FiSettings, FiChevronDown } from 'react-icons/fi';
-import './Header.css';
+import './Header.css?v=2';
 
 const CATEGORIES = [
   { id: 'youtube', label: 'YouTube Videos', icon: '📺' },
@@ -17,6 +17,14 @@ export const Header = ({ isAdmin = false, isCustomer = false }) => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = React.useState(false);
+
+  const isAuthenticated = !!localStorage.getItem('token');
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    navigate('/login');
+  };
 
   const handleCategorySelect = (categoryId) => {
     navigate(`/category/${categoryId}`);
@@ -122,15 +130,47 @@ export const Header = ({ isAdmin = false, isCustomer = false }) => {
             >
               Contact
             </Link>
+            {isAuthenticated ? (
+              <button onClick={handleLogout} className="btn-secondary nav-link" style={{ width: 'auto' }}>
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" className="btn-secondary nav-link" style={{ width: 'auto' }}>
+                Login
+              </Link>
+            )}
           </nav>
         )}
 
-        {/* Auth Section */}
-        <div className="header-auth">
-          <Link to="/login" className="btn-secondary">
-            Login
-          </Link>
-        </div>
+        {/* Customer Route Header */}
+        {isCustomerRoute && (
+          <div style={{ marginLeft: 'auto' }}>
+            {isAuthenticated ? (
+              <button onClick={handleLogout} className="btn-secondary nav-link" style={{ width: 'auto' }}>
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" className="btn-secondary nav-link" style={{ width: 'auto' }}>
+                Login
+              </Link>
+            )}
+          </div>
+        )}
+
+        {/* Admin Route Header */}
+        {isAdmin && (
+          <div style={{ marginLeft: 'auto' }}>
+            {isAuthenticated ? (
+              <button onClick={handleLogout} className="btn-secondary nav-link" style={{ width: 'auto' }}>
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" className="btn-secondary nav-link" style={{ width: 'auto' }}>
+                Login
+              </Link>
+            )}
+          </div>
+        )}
 
         {/* Mobile Menu Toggle */}
         {!isAdmin && !isCustomerRoute && (

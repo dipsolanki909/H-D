@@ -45,8 +45,8 @@ export const AdminPanel = () => {
         adminAPI.getUsers(),
         adminAPI.getSystemStats(),
       ]);
-      setUsers(usersRes.data || []);
-      setStats(statsRes.data || {});
+      setUsers(usersRes.data.data || []);
+      setStats(statsRes.data.data || {});
     } catch (err) {
       setUsers([
         { id: 'u1', fullName: 'Riya Patel', email: 'riya@example.com' },

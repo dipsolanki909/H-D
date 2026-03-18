@@ -1,10 +1,9 @@
 const express = require('express');
 const controller = require('../controllers/videoController');
-const { protect } = require('../middleware/authMiddleware');
+
 
 const router = express.Router();
 
-router.use(protect);
 
 /**
  * @swagger
