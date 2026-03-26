@@ -1,0 +1,251 @@
+.export-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 24px;
+}
+
+.export-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: white;
+  margin-bottom: 32px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.export-header h1 {
+  font-size: 32px;
+}
+
+.export-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.export-section {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.export-section h2 {
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.resolution-grid,
+.format-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.resolution-card,
+.format-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.resolution-card:hover:not(:disabled),
+.format-card:hover {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.resolution-card.selected,
+.format-card.selected {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+  color: white;
+}
+
+.resolution-card:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.resolution-card h4,
+.format-card h4 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.quality {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.free-badge {
+  background: #51cf66;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.premium-price {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.lock-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+}
+
+.upgrade-hint {
+  color: #667eea;
+  font-size: 13px;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+.format-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.details-box {
+  background: #f5f7fa;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row span {
+  color: #666;
+}
+
+.detail-row strong {
+  color: #333;
+}
+
+.export-progress {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease;
+}
+
+.export-complete {
+  background: white;
+  border-radius: 16px;
+  padding: 48px 24px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.success-icon {
+  color: #51cf66;
+  margin-bottom: 16px;
+}
+
+.export-complete h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.export-complete p {
+  color: #999;
+  margin-bottom: 32px;
+  font-size: 15px;
+}
+
+.completion-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.social-share {
+  background: #f5f7fa;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.social-share p {
+  margin-bottom: 16px;
+  color: #666;
+}
+
+.social-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.social-btn {
+  background: white;
+  border: 2px solid #e0e0e0;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.completion-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}

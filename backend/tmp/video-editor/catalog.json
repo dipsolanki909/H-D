@@ -1,0 +1,36 @@
+{
+  "videos": [
+    {
+      "id": "026b51e4-9791-47c1-aa9d-2f65a45779bf",
+      "filePath": "C:\\H-D\\H-D\\backend\\tmp\\video-editor\\uploads\\1774431170734-512871644.mp4",
+      "originalName": "futuristic-tunnel-in-space-with-blue-accents-infinity-loop-3d-render-animation-SBV-338310570-preview.mp4",
+      "mimeType": "video/mp4",
+      "duration": 0,
+      "createdAt": "2026-03-25T09:32:50.967Z"
+    },
+    {
+      "id": "33501c49-7c68-4d0d-a98c-bd7a9cac34d0",
+      "filePath": "C:\\H-D\\H-D\\backend\\tmp\\video-editor\\uploads\\1774431255641-331558704.mp4",
+      "originalName": "Firefly Modern dark gradient background with smooth animated loop, floating 3D social media icons (I.mp4",
+      "mimeType": "video/mp4",
+      "duration": 0,
+      "createdAt": "2026-03-25T09:34:15.815Z"
+    },
+    {
+      "id": "19279a75-62df-4ff8-9add-900673722e06",
+      "filePath": "C:\\H-D\\H-D\\backend\\tmp\\video-editor\\uploads\\1774432116065-965731398.mp4",
+      "originalName": "Firefly Modern dark gradient background with smooth animated loop, floating 3D social media icons (I.mp4",
+      "mimeType": "video/mp4",
+      "duration": 0,
+      "createdAt": "2026-03-25T09:48:36.221Z"
+    },
+    {
+      "id": "441e344e-7c29-4f7e-9417-62b8056cd50c",
+      "filePath": "C:\\H-D\\H-D\\backend\\tmp\\video-editor\\uploads\\1774448950982-845459090.mp4",
+      "originalName": "futuristic-tunnel-in-space-with-blue-accents-infinity-loop-3d-render-animation-SBV-338310570-preview.mp4",
+      "mimeType": "video/mp4",
+      "duration": 0,
+      "createdAt": "2026-03-25T14:29:11.140Z"
+    }
+  ]
+}

@@ -32,6 +32,7 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { Pricing } from './pages/Pricing';
 import { Editing } from './pages/Editing';
+import { ProfessionalVideoEditor } from './pages/ProfessionalVideoEditor';
 import './App.css?v=2';
 
 function ProtectedRoute({ children }) {
@@ -97,6 +98,14 @@ function AppContent() {
         element={
           <ProtectedRoute>
             <VideoEditor />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/pro-editor"
+        element={
+          <ProtectedRoute>
+            <ProfessionalVideoEditor />
           </ProtectedRoute>
         }
       />

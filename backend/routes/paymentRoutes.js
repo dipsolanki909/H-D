@@ -5,6 +5,8 @@ const validate = require('../middleware/validationMiddleware');
 
 const router = express.Router();
 
+router.get('/config', controller.getPublicConfig);
+
 /**
  * @swagger
  * tags:
@@ -39,9 +41,25 @@ const router = express.Router();
  *         description: Bad request
  */
 router.post(
+    '/create-order',
+    body('amount').isNumeric().withMessage('amount must be numeric'),
+    validate,
+    controller.createOrder
+);
+
+router.post(
+    '/verify-payment',
+    body('razorpay_order_id').notEmpty().withMessage('razorpay_order_id is required'),
+    body('razorpay_payment_id').notEmpty().withMessage('razorpay_payment_id is required'),
+    body('razorpay_signature').notEmpty().withMessage('razorpay_signature is required'),
+    validate,
+    controller.verifyPayment
+);
+
+router.post(
     '/create',
     body('amount').isNumeric(),
-    body('currency').isString(),
+    body('plan').notEmpty().withMessage('plan is required'),
     validate,
     controller.createPayment
 );
@@ -71,7 +89,9 @@ router.post(
  */
 router.post(
     '/verify',
-    body('paymentId').notEmpty(),
+    body('razorpay_order_id').notEmpty().withMessage('razorpay_order_id is required'),
+    body('razorpay_payment_id').notEmpty().withMessage('razorpay_payment_id is required'),
+    body('razorpay_signature').notEmpty().withMessage('razorpay_signature is required'),
     validate,
     controller.verifyPayment
 );

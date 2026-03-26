@@ -118,8 +118,8 @@ export const exportAPI = {
 
 // Payment APIs
 export const paymentAPI = {
-  createPayment: (amount, plan) =>
-    apiClient.post('/payment/create', { amount, plan }),
+  createPayment: (amount, plan, currency = 'INR') =>
+    apiClient.post('/payment/create', { amount, plan, currency }),
 
   verifyPayment: (paymentId, signature) =>
     apiClient.post('/payment/verify', { paymentId, signature }),
@@ -131,6 +131,10 @@ export const paymentAPI = {
 
   cancelSubscription: (subscriptionId) =>
     apiClient.delete(`/payment/subscriptions/${subscriptionId}`),
+};
+
+export const pricingAPI = {
+  getPlans: () => apiClient.get('/pricing/plans'),
 };
 
 // Admin APIs

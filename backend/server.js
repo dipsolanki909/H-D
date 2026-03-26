@@ -21,6 +21,7 @@ const pricingRoutes = require('./routes/pricingRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 const aiRoutes = require('./routes/aiRoutes');
+const videoEditorRoutes = require('./routes/videoEditorRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -40,6 +41,7 @@ app.get('/health', (_req, res) => {
 app.use('/auth', authRoutes);
 app.use('/videos', videoRoutes);
 app.use('/projects', projectRoutes);
+app.use('/api/projects', projectRoutes);
 app.use('/editor', editorRoutes);
 app.use('/templates', templateRoutes);
 app.use('/export', exportRoutes);
@@ -50,6 +52,7 @@ app.use('/pricing', pricingRoutes);
 app.use('/contact', contactRoutes);
 app.use('/analytics', analyticsRoutes);
 app.use('/ai', aiRoutes);
+app.use('/api/video', videoEditorRoutes);
 
 // Swagger Setup
 const swaggerOptions = {

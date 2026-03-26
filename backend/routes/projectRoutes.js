@@ -6,6 +6,11 @@ const validate = require('../middleware/validationMiddleware');
 
 const router = express.Router();
 
+router.use((req, _res, next) => {
+    console.log(`[PROJECT][ROUTE] ${req.method} ${req.originalUrl}`);
+    next();
+});
+
 
 /**
  * @swagger

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppStore } from '../utils/appStore';
 import {
   FiPlay,
@@ -14,12 +14,23 @@ import '../components/VideoEditor/Editor.css';
 
 export const VideoEditor = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const store = useAppStore();
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [activeTab, setActiveTab] = useState('trim');
+  const [templateData, setTemplateData] = useState(null);
+
+  // Handle template data passed from Templates page
+  useEffect(() => {
+    if (location.state?.templateData) {
+      console.log('[Editor] Template data received:', location.state.templateData);
+      setTemplateData(location.state.templateData);
+      console.log(`[Editor] ✓ Template loaded: ${location.state.templateData.name}`);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     if (videoRef.current && store.uploadedFile) {
@@ -37,6 +48,7 @@ export const VideoEditor = () => {
   }, [store.uploadedFile]);
 
   const handlePlayPause = () => {
+    console.log('[Editor] Play/Pause toggled');
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
@@ -45,6 +57,7 @@ export const VideoEditor = () => {
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
+              console.log('[Editor] ✓ Video playing');
               setIsPlaying(true);
             })
             .catch((error) => {
@@ -66,17 +79,21 @@ export const VideoEditor = () => {
 
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
-      setDuration(videoRef.current.duration);
+      const dur = videoRef.current.duration;
+      console.log(`[Editor] ✓ Video metadata loaded - Duration: ${dur.toFixed(2)}s`);
+      setDuration(dur);
     }
   };
 
   const handleTrimStart = () => {
+    console.log(`[Editor] Trim start set to ${currentTime}s`);
     store.updateEditorSettings({
       trim: { ...store.editorSettings.trim, start: currentTime },
     });
   };
 
   const handleTrimEnd = () => {
+    console.log(`[Editor] Trim end set to ${currentTime}s`);
     store.updateEditorSettings({
       trim: { ...store.editorSettings.trim, end: currentTime },
     });
@@ -96,9 +113,12 @@ export const VideoEditor = () => {
 
   const handleVideoUpload = (e) => {
     const file = e.target.files?.[0];
+    console.log('[Editor] Video upload attempted:', { fileName: file?.name, fileType: file?.type, fileSize: file?.size });
     if (file && file.type.startsWith('video/')) {
+      console.log('[Editor] ✓ Valid video file detected, uploading...');
       store.uploadVideo(file);
     } else {
+      console.warn('[Editor] ⚠️ Invalid file type selected');
       alert('Please select a valid video file');
     }
   };
@@ -106,9 +126,9 @@ export const VideoEditor = () => {
   return (
     <div className="editor-container">
       <header className="editor-header">
-        <button onClick={() => navigate(-1)} className="back-btn">← Back</button>
-        <h1>Video Editor</h1>
-        <button className="btn-primary" onClick={() => navigate('/preview')}>
+        <button onClick={() => { console.log('[Editor] Back button clicked'); navigate(-1); }} className="back-btn">← Back</button>
+        <h1>Video Editor {templateData && <span style={{ fontSize: '0.8em', opacity: 0.8 }}> - {templateData.name}</span>}</h1>
+        <button className="btn-primary" onClick={() => { console.log('[Editor] Preview button clicked'); navigate('/preview'); }}>
           Preview
         </button>
       </header>

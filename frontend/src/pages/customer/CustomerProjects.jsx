@@ -16,39 +16,6 @@ import {
 } from 'react-icons/fi';
 import './CustomerProjects.css';
 
-const FALLBACK_PROJECTS = [
-  {
-    id: 'fallback-1',
-    name: 'YouTube Intro Promo',
-    status: 'Draft',
-    thumbnail: '/images/DH/bg2.jpg',
-    duration: '01:12',
-    resolution: '1080p',
-    createdAt: new Date().toISOString(),
-    lastEdited: new Date().toISOString(),
-  },
-  {
-    id: 'fallback-2',
-    name: 'Wedding Highlight Reel',
-    status: 'Completed',
-    thumbnail: '/images/DH/bg2.jpg',
-    duration: '02:48',
-    resolution: '4K',
-    createdAt: new Date().toISOString(),
-    lastEdited: new Date().toISOString(),
-  },
-  {
-    id: 'fallback-3',
-    name: 'Instagram Product Ad',
-    status: 'Rendering',
-    thumbnail: '/images/DH/bg2.jpg',
-    duration: '00:54',
-    resolution: '1080x1920',
-    createdAt: new Date().toISOString(),
-    lastEdited: new Date().toISOString(),
-  },
-];
-
 export const CustomerProjects = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
@@ -63,9 +30,17 @@ export const CustomerProjects = () => {
   const fetchUserProjects = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await projectAPI.getProjects(); // Assuming this function exists for fetching user-specific projects
-      const normalizedProjects = (res.data || []).map((project, index) => ({
+      const res = await projectAPI.getProjects();
+      const apiProjects = Array.isArray(res?.data?.data)
+        ? res.data.data
+        : Array.isArray(res?.data)
+          ? res.data
+          : [];
+
+      const normalizedProjects = apiProjects.map((project, index) => ({
+        id: project._id || project.id || `project-${index}`,
         ...project,
+        name: project.name || `Untitled Project ${index + 1}`,
         status: normalizeStatus(project.status, index),
         thumbnail: '/images/DH/bg2.jpg',
         duration: project.duration || getDurationFromIndex(index),
@@ -76,8 +51,8 @@ export const CustomerProjects = () => {
       setProjects(normalizedProjects);
       setError(null);
     } catch (err) {
-      setProjects(FALLBACK_PROJECTS);
-      setError('Live projects could not be loaded. Showing demo projects.');
+      setProjects([]);
+      setError('Failed to load projects. Please try again.');
       console.error('Error fetching user projects:', err);
     } finally {
       setLoading(false);
@@ -139,20 +114,34 @@ export const CustomerProjects = () => {
     });
   };
 
-  const handleCreateProject = () => {
-    const newProject = {
-      id: `new-${Date.now()}`,
-      name: `Untitled Project ${projects.length + 1}`,
-      status: 'Draft',
-      thumbnail: '/images/DH/bg2.jpg',
-      duration: '00:00',
-      resolution: '1080p',
-      createdAt: new Date().toISOString(),
-      lastEdited: new Date().toISOString(),
-    };
+  const handleCreateProject = async () => {
+    try {
+      const projectName = `Untitled Project ${projects.length + 1}`;
+      const res = await projectAPI.create(projectName, '');
+      const createdProject = res?.data?.data;
 
-    setProjects((prev) => [newProject, ...prev]);
-    setCurrentPage(1);
+      if (!createdProject) {
+        throw new Error('Create project API did not return project data.');
+      }
+
+      const normalizedProject = {
+        id: createdProject._id || createdProject.id,
+        ...createdProject,
+        name: createdProject.name || projectName,
+        status: normalizeStatus(createdProject.status, 0),
+        thumbnail: '/images/DH/bg2.jpg',
+        duration: createdProject.duration || '00:00',
+        resolution: createdProject.resolution || '1080p',
+        lastEdited: createdProject.updatedAt || createdProject.createdAt || new Date().toISOString(),
+      };
+
+      setProjects((prev) => [normalizedProject, ...prev]);
+      setCurrentPage(1);
+      setError(null);
+    } catch (err) {
+      setError('Failed to create project. Please try again.');
+      console.error('Error creating project:', err);
+    }
   };
 
   const handleEditProject = (id) => {

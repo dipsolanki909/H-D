@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
+  <defs>
+    <linearGradient id="g4" x1="0" x2="1">
+      <stop offset="0" stop-color="#C7F9B9"/>
+      <stop offset="1" stop-color="#86EFAC"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" rx="18" fill="url(#g4)"/>
+  <g transform="translate(40,40)" fill="#064E3B" font-family="Arial">
+    <text x="14" y="48" font-size="26" font-weight="700">Product Promo</text>
+    <text x="14" y="84" font-size="13" opacity="0.9">Clean shots & CTAs</text>
+    <circle cx="520" cy="80" r="40" fill="rgba(255,255,255,0.08)"/>
+  </g>
+</svg>

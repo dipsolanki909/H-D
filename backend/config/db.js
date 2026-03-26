@@ -2,11 +2,18 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
+  const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/dreamitDB';
+
   try {
-    await mongoose.connect("mongodb+srv://dreamit:dreamit@dreamit.d4cx1zx.mongodb.net/dreamitDB");
-    console.log('MongoDB connected successfully');
+    console.log('[DB] Connecting to MongoDB...');
+
+    await mongoose.connect(mongoUri, {
+      serverSelectionTimeoutMS: 10000,
+    });
+
+    console.log('[DB] MongoDB connected successfully');
   } catch (error) {
-    console.error('MongoDB connection failed:', error.message);
+    console.error('[DB] MongoDB connection failed:', error.message);
     process.exit(1);
   }
 };

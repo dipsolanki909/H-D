@@ -1,0 +1,199 @@
+/* Editing Page Styles */
+
+.editing-page {
+  min-height: 100vh;
+  background: #f6f8fb;
+  color: #222;
+}
+
+.editing-hero {
+  background: linear-gradient(135deg, #4245d1 0%, #7b5cf3 100%);
+  color: white;
+  padding: 56px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.editing-hero .hero-content h1 {
+  font-size: 2.4rem;
+  margin: 0 0 8px;
+  font-weight: 900;
+}
+
+.editing-hero .subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin: 0;
+  font-weight: 400;
+}
+
+.editing-container {
+  max-width: 1200px;
+  margin: 30px auto 80px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 28px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 8px 30px rgba(17, 24, 39, 0.06);
+}
+
+.upload-card h3,
+.tools-card h3,
+.template-card h3,
+.export-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+/* ensure export card has extra bottom margin so it never touches footer */
+.export-card {
+  margin-bottom: 320px;
+}
+.upload-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.file-input input[type="file"] {
+  display: none;
+}
+
+.file-label {
+  background: #f1f5ff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #667eea;
+  border: 1px solid #e6e9f8;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.small {
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.progress-bar {
+  background: #eef2ff;
+  height: 10px;
+  border-radius: 8px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  width: 0%;
+  transition: width 0.25s ease;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.tool {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  font-weight: 700;
+}
+
+.tool svg { width: 22px; height: 22px; color: #667eea; display: block; }
+
+.tool:hover { transform: translateY(-6px); box-shadow: 0 8px 20px rgba(17,24,39,0.06); }
+
+.tool.active { background: linear-gradient(135deg,#eef2ff 0%, #f5edff 100%); border-color: #667eea; }
+
+.tool-panel { margin-top: 14px; padding: 12px; background: #fbfdff; border-radius: 10px; }
+
+.placeholder-area { display:flex; gap:12px; align-items:center; padding:16px; border-radius:8px; background:#ffffff; border:1px dashed #e6e9f8; margin-top:12px; }
+
+.placeholder-icon { width: 28px; height: 28px; color: #667eea; display: block; }
+
+.tool span { color: #111827; font-size: 0.95rem; }
+
+/* Ensure file label text is visible and wraps nicely */
+.file-label { color: #334155; max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; }
+
+.right-column .template-card { margin-bottom: 18px; }
+
+/* Ensure right column appears above footer if there's any overlap */
+.right-column { position: relative; z-index: 5; }
+
+.editing-page { position: relative; z-index: 1; }
+
+.selected-template { display:flex; align-items:center; gap:12px; margin-top:10px; }
+
+.change-template { margin-top:12px; display:flex; align-items:center; gap:8px; }
+
+.export-options { display:flex; gap:10px; margin-top:10px; }
+
+.quality { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; cursor:pointer; border:1px solid #f0f0f5; }
+
+.quality.selected { background: #eef2ff; border-color: #667eea; }
+
+.export-btn { margin-top:16px; width:100%; }
+
+.muted { color:#9aa4bf; margin-top:8px; }
+
+.small { font-size:0.9rem; }
+
+@media (max-width: 1024px) {
+  .editing-container { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .editing-hero .hero-content h1 { font-size:1.6rem; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); }
+}

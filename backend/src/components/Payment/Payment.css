@@ -1,0 +1,262 @@
+.payment-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 24px;
+}
+
+.payment-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 40px;
+}
+
+.payment-header h1 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.payment-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.plans-section {
+  margin-bottom: 40px;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.plan-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.plan-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.plan-card.selected {
+  border-color: #667eea;
+  box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+}
+
+.plan-card.popular {
+  border-color: #f5576c;
+  transform: scale(1.05);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.plan-card h3 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.price {
+  margin-bottom: 24px;
+}
+
+.currency {
+  font-size: 16px;
+  color: #667eea;
+}
+
+.amount {
+  font-size: 36px;
+  font-weight: 700;
+  color: #333;
+}
+
+.period {
+  font-size: 13px;
+  color: #999;
+  margin-left: 4px;
+}
+
+.features-list {
+  list-style: none;
+  margin-bottom: 24px;
+}
+
+.features-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.features-list svg {
+  color: #51cf66;
+}
+
+.btn-select {
+  width: 100%;
+  background: transparent;
+  border: 2px solid #e0e0e0;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-select.selected {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+}
+
+.payment-methods-section,
+.billing-section,
+.summary-section {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.payment-methods-section h2,
+.billing-section h2,
+.summary-section h2 {
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.method-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.method-card:hover {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.method-card.selected {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+}
+
+.method-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.method-card h4 {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.method-card p {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.billing-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.form-group input {
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #f5f7fa;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #666;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.summary-row.total {
+  border-bottom: none;
+  font-weight: 700;
+  color: #333;
+  font-size: 16px;
+}
+
+.payment-actions {
+  margin-bottom: 24px;
+}
+
+.security-info {
+  text-align: center;
+  color: white;
+  font-size: 13px;
+}

@@ -44,9 +44,6 @@ const validate = require('../middleware/validationMiddleware');
  *               gender:
  *                 type: string
  *                 example: female
- *               emailOtp:
- *                 type: string
- *                 example: 1234
  *               address:
  *                 type: string
  *                 example: Surat
@@ -170,5 +167,6 @@ router.post(
   validate,
   authController.refreshToken
 );
+
 
 module.exports = router;

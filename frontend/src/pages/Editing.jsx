@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FiUpload, FiScissors, FiType, FiMusic, FiFilter, FiPlay, FiPause, FiRewind, FiFastForward,
   FiChevronRight, FiChevronLeft, FiPlusCircle, FiCheckCircle, FiFilm, FiDownload, FiStar, FiZap, FiMaximize,
@@ -113,6 +114,7 @@ const EditingLandingPage = ({ onStartEditing }) => (
 
 // Main Component
 export function Editing() {
+  const navigate = useNavigate();
   const videoRef = useRef(null);
   const timelineRef = useRef(null);
   const [videoFile, setVideoFile] = useState(null);
@@ -561,7 +563,7 @@ export function Editing() {
           </aside>
         </div>
       ) : (
-        <EditingLandingPage onStartEditing={() => setShowEditor(true)} />
+        <EditingLandingPage onStartEditing={() => navigate('/pro-editor')} />
       )}
     </div>
   );

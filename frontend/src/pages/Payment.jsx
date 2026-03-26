@@ -1,37 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppStore } from '../utils/appStore';
+import { pricingAPI } from '../api/client';
 import { FiCheck, FiArrowRight } from 'react-icons/fi';
+import { RazorpayPaymentButton } from '../components/Payment/RazorpayPaymentButton';
 import '../components/Payment/Payment.css';
 
-const PLANS = [
+const FALLBACK_PLANS = [
   {
     id: 'per-video',
     name: 'Per Video',
     price: 99,
-    currency: '₹',
-    features: [
-      'Remove watermark',
-      'HD (1080p) export',
-      'MP4 & WebM',
-      'Download & share',
-      'Valid for 30 days',
-    ],
+    currency: 'Rs',
+    features: ['Remove watermark', 'HD export', 'One-time payment'],
     period: 'one-time',
+    popular: false,
   },
   {
     id: 'monthly',
     name: 'Monthly Plan',
     price: 299,
-    currency: '₹',
-    features: [
-      'Unlimited videos',
-      'Full HD (1080p) export',
-      '4K ready',
-      'All templates',
-      'Priority support',
-      'Auto-renew monthly',
-    ],
+    currency: 'Rs',
+    features: ['Unlimited edits', 'Priority support', 'HD export'],
     period: 'monthly',
     popular: true,
   },
@@ -39,16 +29,10 @@ const PLANS = [
     id: 'yearly',
     name: 'Yearly Plan',
     price: 2999,
-    currency: '₹',
-    features: [
-      'All monthly features',
-      'Save 17% off monthly',
-      'Lifetime updates',
-      'Exclusive templates',
-      'Email support',
-      'Annual billing',
-    ],
+    currency: 'Rs',
+    features: ['Best value', 'All premium features', 'Priority support'],
     period: 'yearly',
+    popular: false,
   },
 ];
 
@@ -62,9 +46,12 @@ export const Payment = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const store = useAppStore();
-  const [selectedPlan, setSelectedPlan] = useState('monthly');
+  const [plans, setPlans] = useState([]);
+  const [plansLoading, setPlansLoading] = useState(true);
+  const [plansError, setPlansError] = useState('');
+  const [selectedPlan, setSelectedPlan] = useState('');
   const [selectedMethod, setSelectedMethod] = useState(null);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentError, setPaymentError] = useState('');
   const [paymentData, setPaymentData] = useState({
     cardNumber: '',
     cvv: '',
@@ -72,7 +59,45 @@ export const Payment = () => {
     name: '',
   });
 
-  const plan = PLANS.find(p => p.id === selectedPlan);
+  const plan = useMemo(() => plans.find((p) => p.id === selectedPlan), [plans, selectedPlan]);
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      setPlansLoading(true);
+      setPlansError('');
+
+      try {
+        const response = await pricingAPI.getPlans();
+        const incoming = Array.isArray(response?.data?.data) ? response.data.data : [];
+
+        const mappedPlans = incoming
+          .filter((item) => item?.price !== null && item?.price !== undefined)
+          .map((item, index) => ({
+            id: String(item.id),
+            name: item.name || `Plan ${index + 1}`,
+            price: Number(item.price) || 0,
+            currency: '₹',
+            features: Array.isArray(item.features) && item.features.length > 0
+              ? item.features
+              : ['Premium access', 'High-quality export', 'Priority processing'],
+            period: item.id === 'yearly' ? 'yearly' : item.id === 'monthly' ? 'monthly' : 'one-time',
+            popular: item.id === 'pro' || item.id === 'monthly',
+          }));
+
+        const usablePlans = mappedPlans.length > 0 ? mappedPlans : FALLBACK_PLANS;
+        setPlans(usablePlans);
+        setSelectedPlan((prev) => prev || usablePlans[0]?.id || '');
+      } catch (error) {
+        setPlans(FALLBACK_PLANS);
+        setSelectedPlan((prev) => prev || FALLBACK_PLANS[0].id);
+        setPlansError('Pricing API unavailable. Using default plans.');
+      } finally {
+        setPlansLoading(false);
+      }
+    };
+
+    fetchPlans();
+  }, []);
 
   const handlePaymentMethodSelect = (method) => {
     setSelectedMethod(method);
@@ -83,35 +108,24 @@ export const Payment = () => {
     setPaymentData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handlePayment = async () => {
-    if (!selectedMethod) {
-      alert('Please select a payment method');
+  const handlePaymentSuccess = () => {
+    if (!plan) {
       return;
     }
 
-    setIsProcessing(true);
+    store.setPremium(true, selectedPlan);
+    alert(`Payment successful! You have been upgraded to ${plan.name}.`);
 
-    try {
-      // Simulate payment processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      // Update premium status
-      store.setPremium(true, selectedPlan);
-
-      // Update user role (in real app, this would be done on backend)
-      alert(`✅ Payment successful! You've been upgraded to ${plan.name}`);
-
-      // Redirect based on where they came from
-      if (location.state?.templateId) {
-        navigate('/templates');
-      } else {
-        navigate('/export');
-      }
-    } catch (error) {
-      alert('Payment failed. Please try again.');
-    } finally {
-      setIsProcessing(false);
+    if (location.state?.templateId) {
+      navigate('/templates');
+      return;
     }
+
+    navigate('/export');
+  };
+
+  const handlePaymentFailure = (error) => {
+    setPaymentError(error?.message || 'Payment failed. Please try again.');
   };
 
   return (
@@ -126,8 +140,10 @@ export const Payment = () => {
         <div className="main-content">
           {/* Plans Section */}
           <section className="plans-section">
+            {plansLoading && <p>Loading plans...</p>}
+            {plansError && <p>{plansError}</p>}
             <div className="plans-grid">
-              {PLANS.map(p => (
+              {plans.map(p => (
                 <div
                   key={p.id}
                   className={`plan-card ${selectedPlan === p.id ? 'selected' : ''} ${p.popular ? 'popular' : ''}`}
@@ -263,14 +279,18 @@ export const Payment = () => {
 
           {/* Action Buttons */}
           <div className="payment-actions">
-            <button
+            {paymentError && <p>{paymentError}</p>}
+            <RazorpayPaymentButton
+              amount={plan ? Math.round(plan.price * 1.18) : 0}
+              planId={plan?.id}
+              userName={localStorage.getItem('name') || ''}
+              userEmail={localStorage.getItem('email') || ''}
+              disabled={!selectedMethod || !plan || plansLoading}
               className="btn-primary-large"
-              onClick={handlePayment}
-              disabled={!selectedMethod || isProcessing}
-            >
-              {isProcessing ? 'Processing...' : `Pay ${plan?.currency} ${Math.round(plan?.price * 1.18)}`}
-              {!isProcessing && <FiArrowRight size={20} />}
-            </button>
+              onPaymentSuccess={handlePaymentSuccess}
+              onPaymentFailure={handlePaymentFailure}
+            />
+            {!plansLoading && plan && <FiArrowRight size={20} />}
           </div>
 
           {/* Security Info */}

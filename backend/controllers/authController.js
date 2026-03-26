@@ -1,6 +1,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 const User = require('../models/userModel');
+const sendEmail = require('../utils/email');
 const { generateAccessToken, generateRefreshToken } = require("../utils/jwt");
 
 const loginUser = async (req, res, next) => {
@@ -99,15 +101,12 @@ const createRegister = async (req, res, next) => {
       gender,
       address,
       pincode,
+      isEmailVerified: true,
+      isVerified: true,
     };
 
     const user = await User.create(newUserInfo);
 
-    const token = jwt.sign(
-      { id: user._id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: '1d' }
-    );
 
     const userResponse = {
       _id: user._id,
@@ -120,8 +119,7 @@ const createRegister = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      message: "User registered successfully",
-      token: token,
+      message: "User registered successfully. You can now login.",
       user: userResponse
     });
 
@@ -129,6 +127,8 @@ const createRegister = async (req, res, next) => {
     next(error);
   }
 };
+
+
 
 
 const refreshToken = async (req, res) => {

@@ -1,0 +1,211 @@
+.dhe-video-editor {
+  margin-top: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  background: rgba(17, 24, 39, 0.72);
+  color: #f3f4f6;
+  padding: 18px;
+}
+
+.dhe-video-editor__header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.dhe-video-editor__header p {
+  margin: 8px 0 0;
+  color: #d1d5db;
+  font-size: 0.92rem;
+}
+
+.dhe-video-editor__grid {
+  margin-top: 16px;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 260px 1fr 300px;
+}
+
+.dhe-video-editor__panel,
+.dhe-video-editor__workspace,
+.dhe-video-editor__timeline {
+  background: rgba(31, 41, 55, 0.55);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dhe-video-editor__panel {
+  padding: 12px;
+}
+
+.dhe-video-editor__panel h3 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.dhe-video-editor__file-label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+}
+
+.dhe-video-editor__file-label input {
+  margin-top: 6px;
+  width: 100%;
+}
+
+.dhe-video-editor__button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid rgba(124, 58, 237, 0.75);
+  border-radius: 8px;
+  background: rgba(124, 58, 237, 0.15);
+  color: #f9fafb;
+}
+
+.dhe-video-editor__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dhe-video-editor__button--primary {
+  background: #7c3aed;
+}
+
+.dhe-video-editor__style-box {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.dhe-video-editor__style-box h4 {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+}
+
+.dhe-video-editor__style-box label {
+  display: block;
+  font-size: 0.82rem;
+  margin-bottom: 8px;
+}
+
+.dhe-video-editor__style-box input,
+.dhe-video-editor__style-box select {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.dhe-video-editor__status {
+  margin-top: 12px;
+  font-size: 0.82rem;
+  color: #d1d5db;
+}
+
+.dhe-video-editor__workspace {
+  padding: 10px;
+}
+
+.dhe-video-editor__preview-wrap {
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dhe-video-editor__preview {
+  position: relative;
+  min-height: 220px;
+}
+
+.dhe-video-editor__preview video {
+  width: 100%;
+  max-height: 420px;
+  display: block;
+}
+
+.dhe-video-editor__preview-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  color: #9ca3af;
+}
+
+.dhe-video-editor__subtitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  font-weight: 700;
+  padding: 4px 6px;
+  max-width: 95%;
+  text-align: center;
+}
+
+.dhe-video-editor__subtitle--top {
+  top: 8%;
+}
+
+.dhe-video-editor__subtitle--middle {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dhe-video-editor__subtitle--bottom {
+  bottom: 8%;
+}
+
+.dhe-video-editor__seek-input {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.dhe-video-editor__timeline {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.dhe-video-editor__timeline-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 90px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+}
+
+.dhe-video-editor__subtitle-list {
+  max-height: 520px;
+  overflow: auto;
+  display: grid;
+  gap: 8px;
+}
+
+.dhe-video-editor__subtitle-item span {
+  display: block;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+
+.dhe-video-editor__subtitle-item textarea {
+  width: 100%;
+  min-height: 56px;
+  resize: vertical;
+}
+
+.dhe-video-editor__error {
+  margin: 10px 0 0;
+  color: #fca5a5;
+  font-size: 0.86rem;
+}
+
+@media (max-width: 1280px) {
+  .dhe-video-editor__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dhe-video-editor__subtitle-list {
+    max-height: 280px;
+  }
+}
